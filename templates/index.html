@@ -5,12 +5,40 @@
     <meta charset="UTF-8">
     <title>trogASR</title>
 
-    {% assets "all-js" %}
-        <script type="text/javascript" src="{{ ASSET_URL }}" ></script>
+    {% assets 'all-css' %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
     {% endassets %}
+    {% assets 'all-js' %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+    {% include 'components/menuItem.html' %}
 
 </head>
 <body>
+
+<div id="body">
+
+    <header id="header">
+        <h2>HEADER</h2>
+    </header>
+
+    <nav id="menu">
+        <div>aaa</div>
+        <div>bbb</div>
+    </nav>
+
+    <section id="section"></section>
+
+    <div id="push"></div>
+
+</div>
+
+<footer id="footer">
+    Copyright &copy; 2015 Jan Milota
+</footer>
+
+<div id="loader"></div>
 
 </body>
 </html>

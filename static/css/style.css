@@ -1,0 +1,47 @@
+header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    display: block;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    display: block;
+    position: relative;
+    height: 20px;
+}
+
+nav {
+    background-color: #eeeeee;
+    width: 20%;
+    float: left;
+}
+
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+#push {
+    height: 20px;
+}
+
+#body {
+    min-height: 100%;
+    margin: 0 auto -20px;
+}
+
+#loading {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: antiquewhite;
+}
