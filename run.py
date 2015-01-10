@@ -1,15 +1,19 @@
-from flask import Flask
+from flask import Flask, render_template
+from flask.ext.assets import Environment
 
 import configuration
+import assets
 
 
 app = Flask(__name__)
 app.config.from_object(configuration)
 
+Environment(app).register(assets.bundles)
+
 
 @app.route('/')
-def hello_world():
-	return 'Hello World!' + 'asdasdasd'
+def home():
+	return render_template('index.html')
 
 
 if __name__ == '__main__':
