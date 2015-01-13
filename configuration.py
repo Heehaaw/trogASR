@@ -1,4 +1,4 @@
-__author__ = 'Janek'
+__author__ = 'Janek Milota'
 
 DEBUG = True
 ASSETS_DEBUG = True

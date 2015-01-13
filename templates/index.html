@@ -13,6 +13,8 @@
     {% endassets %}
 
     {% include 'components/menuItem.html' %}
+    {% include 'components/letter.html' %}
+    {% include 'components/localeSelectorItem.html' %}
 
 </head>
 <body>
@@ -20,16 +22,12 @@
 <div id="body">
 
     <header id="header">
-        <h2>HEADER</h2>
+        <h1>HEADER</h1>
+        <div id="localeSelector"></div>
     </header>
 
-    <nav id="menu">
-        <div>aaa</div>
-        <div>bbb</div>
-    </nav>
-
+    <nav id="menu"></nav>
     <section id="section"></section>
-
     <div id="push"></div>
 
 </div>

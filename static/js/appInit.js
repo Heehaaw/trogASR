@@ -1,4 +1,8 @@
-(function ($) {
+/**
+ * Author: Janek Milota
+ * Date: 9.01.2015
+ */
+(function() {
 
 	// registering a jQuery widget
 	$.app = {};
@@ -6,23 +10,26 @@
 	var idPrefix = 'x-id-';
 	var idOrd = 0;
 
-	$.app.getNextId = function () {
+	$.app.getNextId = function() {
 		return idPrefix + idOrd++;
 	};
 
 	$.app.loader = {
-		show: function () {
+		show: function() {
 			$('#loader').show();
 		},
-		hide: function () {
-			$('#loader').hide();
+		hide: function() {
+			$('#loader').fadeOut(500);
+		},
+		delayedHide: function(time) {
+			$('#loader').delay(time).fadeOut(500);
 		}
 	};
 
 	var templateCache = {};
 
 	$.app.templates = {
-		process: function (str, data) {
+		process: function(str, data) {
 			var me = this;
 			var processFn =
 				!/\W/.test(str)
@@ -40,8 +47,8 @@
 						.split("\r").join("\\'")
 					+ "');}return p.join('');");
 
-			if (data) {
-				if (!data.id) {
+			if(data) {
+				if(!data.id) {
 					data.id = $.app.getNextId();
 				}
 				return processFn(data);
@@ -53,24 +60,42 @@
 
 	var components = [];
 
-	$.app.registerInitEvent = function (cmp) {
-		if (!$.isPlainObject(cmp) || !$.isFunction(cmp.initComponent)) {
-			throw 'The component cannot be registered to the app init chain!';
+	$.app.registerComponent = function(cmp) {
+
+		if(!$.isPlainObject(cmp) || !$.isFunction(cmp.initComponent) || !$.isFunction(cmp.reset)) {
+			throw 'The component cannot be registered to the app\'s init chain!';
 		}
+
 		cmp.isInitialized = false;
 		components.push(cmp);
 		return cmp;
 	};
 
+	$.app.reset = function() {
 
-	$(function () {
+		$.app.loader.show();
 
-		for (var i = 0, len = components.length; i < len; i++) {
+		for(var i = 0, len = components.length; i < len; i++) {
+			var cmp = components[i];
+			cmp.isInitialized = false;
+			cmp.reset();
+		}
+
+		$.app.loader.delayedHide(500);
+	};
+
+	$.app.initialize = function() {
+
+		for(var i = 0, len = components.length; i < len; i++) {
 			var cmp = components[i];
 			cmp.initComponent();
 			cmp.isInitialized = true;
 		}
 
-		$.app.loader.hide();
+		$.app.loader.delayedHide(500);
+	};
+
+	$(function() {
+		$.app.initialize();
 	});
-})(jQuery);
+})();
