@@ -2,80 +2,109 @@
 .letter-A {
     background: url('../img/font/A.png') no-repeat right top;
 }
+
 .letter-B {
     background: url('../img/font/B.png') no-repeat right top;
 }
+
 .letter-C {
     background: url('../img/font/C.png') no-repeat right top;
 }
+
 .letter-D {
     background: url('../img/font/D.png') no-repeat right top;
 }
+
 .letter-E {
     background: url('../img/font/E.png') no-repeat right top;
 }
+
 .letter-F {
     background: url('../img/font/G.png') no-repeat right top;
 }
+
 .letter-H {
     background: url('../img/font/H.png') no-repeat right top;
 }
+
 .letter-I {
     background: url('../img/font/I.png') no-repeat right top;
 }
+
 .letter-J {
     background: url('../img/font/J.png') no-repeat right top;
 }
+
 .letter-K {
     background: url('../img/font/K.png') no-repeat right top;
 }
+
 .letter-L {
     background: url('../img/font/L.png') no-repeat right top;
 }
+
 .letter-M {
     background: url('../img/font/M.png') no-repeat right top;
 }
+
 .letter-N {
     background: url('../img/font/N.png') no-repeat right top;
 }
+
 .letter-O {
     background: url('../img/font/O.png') no-repeat right top;
 }
+
 .letter-P {
     background: url('../img/font/P.png') no-repeat right top;
 }
+
 .letter-Q {
     background: url('../img/font/Q.png') no-repeat right top;
 }
+
 .letter-R {
     background: url('../img/font/R.png') no-repeat right top;
 }
+
 .letter-S {
     background: url('../img/font/S.png') no-repeat right top;
 }
+
 .letter-T {
     background: url('../img/font/T.png') no-repeat right top;
 }
+
 .letter-U {
     background: url('../img/font/U.png') no-repeat right top;
 }
+
 .letter-V {
     background: url('../img/font/V.png') no-repeat right top;
 }
+
 .letter-W {
     background: url('../img/font/W.png') no-repeat right top;
 }
+
 .letter-X {
     background: url('../img/font/X.png') no-repeat right top;
 }
+
 .letter-Y {
     background: url('../img/font/Y.png') no-repeat right top;
 }
+
 .letter-Z {
     background: url('../img/font/Z.png') no-repeat right top;
 }
+
 .letter {
-    background-size: 32px 32px;
-    width: 32px;
-    height: 32px;
+    background-size: cover;
+    display: inline-block;
+}
+
+#letter-metrics {
+    width: 3%;
+    display: none;
 }

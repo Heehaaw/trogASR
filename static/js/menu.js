@@ -9,8 +9,6 @@ $.app.menu = function() {
 	var localeSelectorId = '#localeSelector';
 	var localeSelectorItemTemplateId = 'tpl_localeSelectorItem';
 
-	var delimiterSpan = '<span> :: </span>';
-
 	var createMenuItems = function() {
 
 		var htmlBuffer = '';
@@ -34,21 +32,18 @@ $.app.menu = function() {
 
 		for(var loc in $.app.i18n.locale) {
 
-			$localeSelector.append(delimiterSpan);
-
 			var sel = $.app.templates.process(localeSelectorItemTemplateId, {
-				value: loc
+				data: loc,
+				selectorCls: loc
 			});
 
 			var $sel = $(sel).on('click', function() {
-				$.app.i18n.setCurrentLocale($(this).text());
+				$.app.i18n.setCurrentLocale($(this).attr('data'));
 				$.app.reset();
 			});
 
 			$localeSelector.append($sel);
 		}
-
-		$localeSelector.append(delimiterSpan);
 	};
 
 	var reset = function() {

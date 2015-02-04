@@ -12,12 +12,26 @@ header {
 
 #localeSelector {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 0.5%;
+    top: 1%;
 }
 
 #localeSelector .localeSelectorItem {
     cursor: pointer;
+    display: inline-block;
+    width: 26px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+#localeSelector .localeSelectorItem.cs{
+    background: url('../img/ico/cs.png') no-repeat right top;
+    background-size: cover;
+}
+
+#localeSelector .localeSelectorItem.en{
+    background: url('../img/ico/en.png') no-repeat right top;
+    background-size: cover;
 }
 
 footer {
@@ -29,18 +43,21 @@ footer {
 }
 
 footer, #push {
-    height: 20px;
+    height: 17px;
 }
 
 #body {
     min-height: 100%;
-    margin: 0 auto -20px;
+    margin-bottom: -17px;
+    background: url('../img/background.jpg') repeat right top;
 }
 
 nav {
-    background-color: #eeeeee;
-    width: 35%;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 40%;
     float: left;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
 
 * {
@@ -71,8 +88,10 @@ html, body {
 }
 
 .menuItem-wrapper {
-    height: 32px;
-    margin-top: 10px;
-    margin-left: 10px;
+    margin-top: 3%;
+    margin-left: 3%;
 }
 
+.menuItem {
+    font-size: 0px;
+}

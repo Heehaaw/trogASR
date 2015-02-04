@@ -77,7 +77,6 @@
 
 		for(var i = 0, len = components.length; i < len; i++) {
 			var cmp = components[i];
-			cmp.isInitialized = false;
 			cmp.reset();
 		}
 
@@ -94,6 +93,16 @@
 
 		$.app.loader.delayedHide(500);
 	};
+
+	var resizeHandle;
+	var onResize = function(){
+		$.app.reset();
+	};
+	$(window).resize(function() {
+		$.app.loader.show();
+		clearTimeout(resizeHandle);
+		resizeHandle = setTimeout(onResize, 100);
+	});
 
 	$(function() {
 		$.app.initialize();

@@ -6,9 +6,12 @@ $.app.spriteFactory = function() {
 
 	var letterTemplateId = 'tpl_letter';
 	var letterClassPrefix = 'letter-';
+	var letterMetricsId = '#letter-metrics';
+
+	var letterSize = 0;
 
 	var initComponent = function() {
-
+		letterSize = $(letterMetricsId).width();
 	};
 
 	var letterMap = {
@@ -17,16 +20,20 @@ $.app.spriteFactory = function() {
 		Š: 'S', T: 'T', Ť: 'T', U: 'U', Ú: 'U', Ů: 'U', V: 'V', W: 'W', X: 'X', Y: 'Y', Ý: 'Y', Z: 'Z', Ž: 'Z'
 	};
 
-	var createLetterSprite = function(letter) {
+	var createLetterSprite = function(letter, sizeMultiplier) {
+		if(!letter) {
+			return '';
+		}
 		return $.app.templates.process(letterTemplateId, {
-			letterClass: 'float-left ' + letterClassPrefix + letterMap[letter.toUpperCase()]
+			letterCls: letterClassPrefix + letterMap[letter.toUpperCase()],
+			size: (letterSize * (sizeMultiplier || 1)) >> 0
 		});
 	};
 
-	var createWordSprite = function(word) {
+	var createWordSprite = function(word, sizeMultiplier) {
 		var htmlBuffer = '<div>';
 		for(var i = 0, len = word.length; i < len; i++) {
-			htmlBuffer += $.app.spriteFactory.createLetterSprite(word[i]);
+			htmlBuffer += $.app.spriteFactory.createLetterSprite(word[i], sizeMultiplier);
 		}
 		htmlBuffer += '</div>';
 		return htmlBuffer;
@@ -35,6 +42,7 @@ $.app.spriteFactory = function() {
 	var me = {
 		initComponent: initComponent,
 		reset: function() {
+			initComponent();
 		},
 		createLetterSprite: createLetterSprite,
 		createWordSprite: createWordSprite
