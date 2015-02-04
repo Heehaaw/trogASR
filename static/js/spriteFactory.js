@@ -31,11 +31,10 @@ $.app.spriteFactory = function() {
 	};
 
 	var createWordSprite = function(word, sizeMultiplier) {
-		var htmlBuffer = '<div>';
+		var htmlBuffer = '';
 		for(var i = 0, len = word.length; i < len; i++) {
 			htmlBuffer += $.app.spriteFactory.createLetterSprite(word[i], sizeMultiplier);
 		}
-		htmlBuffer += '</div>';
 		return htmlBuffer;
 	};
 

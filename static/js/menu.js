@@ -21,7 +21,29 @@ $.app.menu = function() {
 		htmlBuffer += $.app.templates.process(menuItemTemplateId, {
 			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_LEADER_BOARDS)
 		});
-		$(menuId).append(htmlBuffer);
+
+		var $menu = $(menuId);
+		$menu.append(htmlBuffer);
+
+		var timeoutHandle;
+
+		var $menuItems = $menu.find('.menuItem');
+		$menuItems.on('mouseenter', function() {
+			var $me = $(this);
+			clearTimeout(timeoutHandle);
+			timeoutHandle = setTimeout(function() {
+				if($me.hasClass('active')) {
+					return false;
+				}
+				$menuItems.not($me).removeClass('active').addClass('blur');
+				$me.removeClass('blur').addClass('active');
+			}, 75);
+		});
+
+		$menu.on('mouseleave', function() {
+			clearTimeout(timeoutHandle);
+			$menuItems.removeClass('active blur');
+		});
 	};
 
 	var initComponent = function() {
@@ -38,7 +60,7 @@ $.app.menu = function() {
 			});
 
 			var $sel = $(sel).on('click', function() {
-				$.app.i18n.setCurrentLocale($(this).attr('data'));
+				$.app.i18n.setCurrentLocale($(this).data('locale'));
 				$.app.reset();
 			});
 

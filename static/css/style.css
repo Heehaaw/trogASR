@@ -24,12 +24,12 @@ header {
     margin-right: 5px;
 }
 
-#localeSelector .localeSelectorItem.cs{
+#localeSelector .localeSelectorItem.cs {
     background: url('../img/ico/cs.png') no-repeat right top;
     background-size: cover;
 }
 
-#localeSelector .localeSelectorItem.en{
+#localeSelector .localeSelectorItem.en {
     background: url('../img/ico/en.png') no-repeat right top;
     background-size: cover;
 }
@@ -87,11 +87,50 @@ html, body {
     float: right;
 }
 
+.menu:before, .menu:after {
+    content: "";
+}
+
+.menu:after {
+    clear: both;
+}
+
 .menuItem-wrapper {
     margin-top: 3%;
     margin-left: 3%;
+    display: table;
 }
 
+/* Blur functionality */
+
 .menuItem {
+    cursor: pointer;
     font-size: 0px;
+    text-transform: none;
+    z-index: 1;
+    box-shadow:
+        0px 0px 0px 3px rgba(255, 255, 255, 1),
+        1px 1px 3px 6px rgba(0, 0, 0, 0.2);
+    transition:
+        opacity 0.4s linear,
+        transform 0.4s ease-in-out,
+        box-shadow 0.4s ease-in-out;
+    transform-origin: 0% 50%;
+}
+
+.menuItem.blur {
+    box-shadow: 0px 0px 20px 6px rgba(255,255,255,1);
+    transform: scale(0.9);
+    transform-origin: 0% 50%;
+	opacity: 0.7;
+}
+
+.menuItem.active, .menuItem.clicked {
+    transform: scale(1.03);
+    transform-origin: 0% 50%;
+    box-shadow:
+		0px 0px 0px 6px rgba(255,255,255,1),
+		1px 11px 15px 6px rgba(0,0,0,0.4);
+	z-index: 100;
+	opacity: 1;
 }
