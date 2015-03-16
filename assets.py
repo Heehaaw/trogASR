@@ -15,6 +15,7 @@ bundles = {
 		'js/i18n.js',
 		'js/spriteFactory.js',
 		'js/menu.js',
+		'js/options.js',
 		output='gen/all.js',
 		filters='jsmin'
 	)

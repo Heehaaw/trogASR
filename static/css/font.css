@@ -1,4 +1,3 @@
-
 .letter-A {
     background: url('../img/font/A.png') no-repeat right top;
 }
@@ -20,6 +19,10 @@
 }
 
 .letter-F {
+    background: url('../img/font/G.png') no-repeat right top;
+}
+
+.letter-G {
     background: url('../img/font/G.png') no-repeat right top;
 }
 

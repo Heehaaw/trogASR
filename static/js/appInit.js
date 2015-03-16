@@ -2,9 +2,9 @@
  * Author: Janek Milota
  * Date: 9.01.2015
  */
-(function() {
+(function($) {
 
-	// registering a jQuery widget
+	// registering a jQuery plugin
 	$.app = {};
 
 	var idPrefix = 'x-id-';
@@ -95,7 +95,7 @@
 	};
 
 	var resizeHandle;
-	var onResize = function(){
+	var onResize = function() {
 		$.app.reset();
 	};
 	$(window).resize(function() {
@@ -107,4 +107,4 @@
 	$(function() {
 		$.app.initialize();
 	});
-})();
+})(jQuery);

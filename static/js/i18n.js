@@ -22,6 +22,14 @@ $.app.i18n = function() {
 		MENU_LEADER_BOARDS: {
 			cs: 'Žebříčky',
 			en: 'Leaderboards'
+		},
+		OPTIONS_MODE: {
+			cs: 'Mód',
+			en: 'Mode'
+		},
+		OPTIONS_GAME_LANGUAGE: {
+			cs: 'Jazyk',
+			en: 'Language'
 		}
 	};
 

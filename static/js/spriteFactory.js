@@ -44,7 +44,10 @@ $.app.spriteFactory = function() {
 			initComponent();
 		},
 		createLetterSprite: createLetterSprite,
-		createWordSprite: createWordSprite
+		createWordSprite: createWordSprite,
+		getLetterMetrics: function() {
+			return letterSize;
+		}
 	};
 
 	return $.app.registerComponent(me);

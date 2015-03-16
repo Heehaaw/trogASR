@@ -6,49 +6,90 @@ $.app.menu = function() {
 
 	var menuId = '#menu';
 	var menuItemTemplateId = 'tpl_menuItem';
-	var localeSelectorId = '#localeSelector';
 	var localeSelectorItemTemplateId = 'tpl_localeSelectorItem';
+	var localeSelectorId = '#localeSelector';
+	var blurCls = 'blur';
+	var activeCls = 'active';
+	var clickedCls = 'clicked';
 
 	var createMenuItems = function() {
 
-		var htmlBuffer = '';
-		htmlBuffer += $.app.templates.process(menuItemTemplateId, {
-			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_PLAY)
-		});
-		htmlBuffer += $.app.templates.process(menuItemTemplateId, {
-			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_OPTIONS)
-		});
-		htmlBuffer += $.app.templates.process(menuItemTemplateId, {
-			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_LEADER_BOARDS)
-		});
-
 		var $menu = $(menuId);
-		$menu.append(htmlBuffer);
 
-		var timeoutHandle;
+		$menu.on('click', function() {
+			if(hidden){
+				$menu.removeClass('hide');
+			}
+		});
 
+		$menu.on('mouseleave', function() {
+			if(hidden){
+				$menu.addClass('hide');
+			}
+		});
+
+		var $menuItem = $($.app.templates.process(menuItemTemplateId, {
+			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_PLAY)
+		}));
+		$menuItem.on('click', function() {
+			$.app.options.hide();
+			hide();
+		});
+
+		$menu.append($menuItem);
+
+		$menuItem = $($.app.templates.process(menuItemTemplateId, {
+			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_OPTIONS)
+		}));
+		$menuItem.on('click', function() {
+			$.app.options.show();
+			show();
+		});
+		$menu.append($menuItem);
+
+		$menuItem = $($.app.templates.process(menuItemTemplateId, {
+			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_LEADER_BOARDS)
+		}));
+		$menu.append($menuItem);
+
+		// We have to add the items first so they acquire context by said addition
 		var $menuItems = $menu.find('.menuItem');
+		var timeoutHandle;
+		var $clicked;
+
 		$menuItems.on('mouseenter', function() {
 			var $me = $(this);
 			clearTimeout(timeoutHandle);
 			timeoutHandle = setTimeout(function() {
-				if($me.hasClass('active')) {
+				if($me.hasClass(activeCls)) {
 					return false;
 				}
-				$menuItems.not($me).removeClass('active').addClass('blur');
-				$me.removeClass('blur').addClass('active');
+				$menuItems.not($me).removeClass(activeCls).addClass(blurCls);
+				$me.removeClass(blurCls).addClass(activeCls);
 			}, 75);
 		});
 
-		$menu.on('mouseleave', function() {
+		$menuItems.on('click', function() {
+			var $me = $(this);
+			$menuItems.not($me).removeClass(clickedCls).addClass(blurCls);
+			$me.addClass(clickedCls);
+			$clicked = $me;
+		});
+
+		$menuItems.on('mouseleave', function() {
 			clearTimeout(timeoutHandle);
-			$menuItems.removeClass('active blur');
+			var $me = $(this);
+			$menuItems.removeClass(activeCls);
+			if(!$clicked) {
+				$menuItems.removeClass(blurCls);
+			}
+			else if($clicked != $me) {
+				$me.addClass(blurCls);
+			}
 		});
 	};
 
-	var initComponent = function() {
-
-		createMenuItems();
+	var createLocaleSelector = function() {
 
 		var $localeSelector = $(localeSelectorId);
 
@@ -68,6 +109,23 @@ $.app.menu = function() {
 		}
 	};
 
+	var hidden = false;
+
+	var hide = function() {
+		$(menuId).addClass('hide');
+		hidden = true;
+	};
+
+	var show = function() {
+		$(menuId).removeClass('hide');
+		hidden = false;
+	};
+
+	var initComponent = function() {
+		createMenuItems();
+		createLocaleSelector();
+	};
+
 	var reset = function() {
 		$(menuId).empty();
 		createMenuItems();
@@ -75,7 +133,9 @@ $.app.menu = function() {
 
 	var me = {
 		initComponent: initComponent,
-		reset: reset
+		reset: reset,
+		hide: hide,
+		show: show
 	};
 
 	return $.app.registerComponent(me);
