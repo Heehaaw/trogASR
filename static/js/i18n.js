@@ -17,7 +17,6 @@ $.app.i18n = function() {
 		MENU_OPTIONS: {
 			cs: 'Nastavení',
 			en: 'Options'
-
 		},
 		MENU_LEADER_BOARDS: {
 			cs: 'Žebříčky',
@@ -30,16 +29,31 @@ $.app.i18n = function() {
 		OPTIONS_GAME_LANGUAGE: {
 			cs: 'Jazyk',
 			en: 'Language'
+		},
+		OPTIONS_MODE_TIMED: {
+			cs: 'Na čas',
+			en: 'Timed'
+		},
+		OPTIONS_MODE_STATIC: {
+			cs: 'Statický',
+			en: 'Static'
+		},
+		OPTIONS_LANGUAGE_CS_EN: {
+			cs: 'Čeština -> Angličtina',
+			en: 'Czech -> English'
+		},
+		OPTIONS_LANGUAGE_EN_CS: {
+			cs: 'Angličtina -> Čeština',
+			en: 'English -> Czech'
 		}
 	};
-
 
 	var initComponent = function() {
 
 		for(var keyName in keys) {
-			keys[keyName].getText = function(loc) {
+			keys[keyName].getText = $.proxy(function(loc) {
 				return this[loc || currentLocale];
-			}
+			}, keys[keyName]);
 		}
 
 		setLocale(locale.en);
@@ -78,7 +92,8 @@ $.app.i18n = function() {
 	};
 
 	var me = {
-		initComponent: initComponent,
+		initComponent: function() {
+		},
 		reset: function() {
 		},
 		getCurrentLocale: getLocale,
@@ -88,6 +103,8 @@ $.app.i18n = function() {
 		t: {},
 		getText: getText
 	};
+
+	initComponent();
 
 	return $.app.registerComponent(me);
 }();

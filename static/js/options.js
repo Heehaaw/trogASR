@@ -6,36 +6,94 @@ $.app.options = function() {
 
 	var optionsId = '#options';
 	var optionsItemTemplateId = 'tpl_optionsItem';
+	var optionsValueCls = '.optionsItem';
+	var optionsLeftCls = '.optionsLeft';
+	var optionsRightCls = '.optionsRight';
+	var showCls = 'show';
+
 	var letterSizeMultiplier = 0.7;
+	var arrowHeight;
+	var arrowWidth;
+
+	var modes = {
+		TIMED: {
+			id: 'TIMED',
+			getText: $.app.i18n.keys.OPTIONS_MODE_TIMED.getText
+		},
+		STATIC: {
+			id: 'STATIC',
+			getText: $.app.i18n.keys.OPTIONS_MODE_STATIC.getText
+		}
+	};
+
+	var languages = {
+		CS_EN: {
+			id: 'CS_EN',
+			getText: $.app.i18n.keys.OPTIONS_LANGUAGE_CS_EN.getText
+		},
+		EN_CS: {
+			id: 'EN_CS',
+			getText: $.app.i18n.keys.OPTIONS_LANGUAGE_EN_CS.getText
+		}
+	};
+
+	var createItem = function(sprite, values) {
+
+		var ord = [];
+		var len = 0;
+		for(var val in values) {
+			ord[len++] = values[val];
+		}
+
+		var index = 0;
+		var $item = $($.app.templates.process(optionsItemTemplateId, {
+			label: sprite,
+			value: ord[index].getText(),
+			arrowHeight: arrowHeight,
+			arrowWidth: arrowWidth
+		}));
+
+		$item.find(optionsLeftCls).on('click', function() {
+			if(--index < 0) {
+				index = len - 1;
+			}
+			$item.find(optionsValueCls).text(ord[index].getText());
+		});
+
+		$item.find(optionsRightCls).on('click', function() {
+			if(++index >= len) {
+				index = 0;
+			}
+			$item.find(optionsValueCls).text(ord[index].getText());
+		});
+
+		$item.getCurrent = function() {
+			return ord[index];
+		};
+
+		return $item;
+	};
+
+	var getCurrentMode;
+	var getCurrentLanguage;
 
 	var createOptionItems = function() {
 
 		var $options = $(optionsId);
 
-		var arrowHeight = ($.app.spriteFactory.getLetterMetrics() * letterSizeMultiplier) >> 0;
-		var arrowWidth = (arrowHeight * 1.5) >> 0;
+		var $mode = createItem($.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_MODE, letterSizeMultiplier), modes);
+		getCurrentMode = $mode.getCurrent;
+		$options.append($mode);
 
-		var $item = $($.app.templates.process(optionsItemTemplateId, {
-			label: $.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_MODE, letterSizeMultiplier),
-			value: 'adsadasdasd',
-			arrowHeight: arrowHeight,
-			arrowWidth: arrowWidth
-		}));
-		$options.append($item);
-
-		$item = $($.app.templates.process(optionsItemTemplateId, {
-			label: $.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_GAME_LANGUAGE, letterSizeMultiplier),
-			value: 'adsadasdasd',
-			arrowHeight: arrowHeight,
-			arrowWidth: arrowWidth
-		}));
-		$options.append($item);
+		var $language = createItem($.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_GAME_LANGUAGE, letterSizeMultiplier), languages);
+		getCurrentLanguage = $language.getCurrent;
+		$options.append($language);
 	};
 
 	var initComponent = function() {
 
-		var $options = $('<div/>').attr('id', 'options');
-		$('section').append($options);
+		arrowHeight = ($.app.spriteFactory.getLetterMetrics() * letterSizeMultiplier) >> 0;
+		arrowWidth = (arrowHeight * 1.5) >> 0;
 
 		createOptionItems();
 	};
@@ -43,21 +101,29 @@ $.app.options = function() {
 	var reset = function() {
 		hide();
 		$(optionsId).empty();
-		createOptionItems();
+		initComponent();
 	};
 
 	var show = function() {
-		$(optionsId).addClass('show');
+		$(optionsId).addClass(showCls);
 	};
 	var hide = function() {
-		$(optionsId).removeClass('show');
+		$(optionsId).removeClass(showCls);
 	};
 
 	var me = {
 		initComponent: initComponent,
 		reset: reset,
 		show: show,
-		hide: hide
+		hide: hide,
+		modes: modes,
+		getCurrentMode: function() {
+			return getCurrentMode();
+		},
+		languages: languages,
+		getCurrentLanguage: function() {
+			return getCurrentLanguage();
+		}
 	};
 
 	return $.app.registerComponent(me);

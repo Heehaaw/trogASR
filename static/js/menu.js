@@ -11,20 +11,21 @@ $.app.menu = function() {
 	var blurCls = 'blur';
 	var activeCls = 'active';
 	var clickedCls = 'clicked';
+	var hideCls = 'hide';
 
 	var createMenuItems = function() {
 
 		var $menu = $(menuId);
 
 		$menu.on('click', function() {
-			if(hidden){
-				$menu.removeClass('hide');
+			if(hidden) {
+				$menu.removeClass(hideCls);
 			}
 		});
 
 		$menu.on('mouseleave', function() {
-			if(hidden){
-				$menu.addClass('hide');
+			if(hidden) {
+				$menu.addClass(hideCls);
 			}
 		});
 
@@ -52,7 +53,7 @@ $.app.menu = function() {
 		}));
 		$menu.append($menuItem);
 
-		// We have to add the items first so they acquire context by said addition
+		// We have to add the items first so they acquire context
 		var $menuItems = $menu.find('.menuItem');
 		var timeoutHandle;
 		var $clicked;
@@ -112,12 +113,12 @@ $.app.menu = function() {
 	var hidden = false;
 
 	var hide = function() {
-		$(menuId).addClass('hide');
+		$(menuId).addClass(hideCls);
 		hidden = true;
 	};
 
 	var show = function() {
-		$(menuId).removeClass('hide');
+		$(menuId).removeClass(hideCls);
 		hidden = false;
 	};
 
