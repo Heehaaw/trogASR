@@ -13,7 +13,7 @@ html, body {
 }
 
 header {
-    background-color: black;
+    background: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0.1));
     color: white;
     text-align: center;
     display: block;
@@ -25,12 +25,12 @@ section {
 }
 
 #localeSelector {
-    float: right;
+    float: left;
     position: absolute;
-    right: 0.5%;
-    top: 0.2%;
-    width: 4.5%;
-    height: 2.2%;
+    left: 0.5%;
+    top: 0.4%;
+    width: 4.6%;
+    height: 2%;
 }
 
 #localeSelector .localeSelectorItem {
@@ -233,4 +233,11 @@ footer {
     box-shadow:
         0vw 0vw 0vw 0.07vw rgba(255, 255, 255, 1),
         0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+}
+
+#fbHolder {
+    float: right;
+    position: absolute;
+    right: 0.5%;
+    top: 0.4%;
 }

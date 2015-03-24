@@ -2,7 +2,7 @@
  * Author: Janek Milota
  * Date: 28.02.2015
  */
-$.app.options = function() {
+$.app.options = function($) {
 
 	var optionsId = '#options';
 	var optionsItemTemplateId = 'tpl_optionsItem';
@@ -127,4 +127,4 @@ $.app.options = function() {
 	};
 
 	return $.app.registerComponent(me);
-}();
+}(jQuery);

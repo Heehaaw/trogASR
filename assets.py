@@ -10,9 +10,9 @@ bundles = {
 		filters='cssmin'
 	),
 	'all-js': Bundle(
-		'js/lib/jquery-2.1.3.js',
 		'js/appInit.js',
 		'js/i18n.js',
+		'js/fb.js',
 		'js/spriteFactory.js',
 		'js/menu.js',
 		'js/options.js',

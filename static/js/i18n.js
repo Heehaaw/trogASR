@@ -2,7 +2,7 @@
  * Author: Janek Milota
  * Date: 12.01.2015
  */
-$.app.i18n = function() {
+$.app.i18n = function($) {
 
 	var locale = {
 		cs: 'cs',
@@ -51,9 +51,10 @@ $.app.i18n = function() {
 	var initComponent = function() {
 
 		for(var keyName in keys) {
-			keys[keyName].getText = $.proxy(function(loc) {
+			var key = keys[keyName];
+			key.getText = $.proxy(function(loc) {
 				return this[loc || currentLocale];
-			}, keys[keyName]);
+			}, key);
 		}
 
 		setLocale(locale.en);
@@ -107,4 +108,4 @@ $.app.i18n = function() {
 	initComponent();
 
 	return $.app.registerComponent(me);
-}();
+}(jQuery);

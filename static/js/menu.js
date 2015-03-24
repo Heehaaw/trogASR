@@ -2,7 +2,7 @@
  * Author: Janek Milota
  * Date: 9.01.2015
  */
-$.app.menu = function() {
+$.app.menu = function($) {
 
 	var menuId = '#menu';
 	var menuItemTemplateId = 'tpl_menuItem';
@@ -140,5 +140,5 @@ $.app.menu = function() {
 	};
 
 	return $.app.registerComponent(me);
-}();
+}(jQuery);
 

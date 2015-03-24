@@ -2,7 +2,7 @@
  * Author: Janek Milota
  * Date: 12.01.2015
  */
-$.app.spriteFactory = function() {
+$.app.spriteFactory = function($) {
 
 	var letterTemplateId = 'tpl_letter';
 	var letterClassPrefix = 'letter-';
@@ -51,4 +51,4 @@ $.app.spriteFactory = function() {
 	};
 
 	return $.app.registerComponent(me);
-}();
+}(jQuery);

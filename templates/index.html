@@ -8,6 +8,9 @@
     {% assets 'all-css' %}
         <link rel="stylesheet" href="{{ ASSET_URL }}"/>
     {% endassets %}
+
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
     {% assets 'all-js' %}
         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
@@ -29,6 +32,10 @@
     <header id="header">
         <h1>HEADER</h1>
         <div id="localeSelector"></div>
+        <div id="fbHolder">
+          <div class="fb-login-button" data-max-rows="1" data-size="medium" data-auto-logout-link="true"></div>
+          <div class="fb-like" data-share="true" data-width="20%" data-show-faces="true"></div>
+        </div>
     </header>
 
     <nav id="menu"></nav>
