@@ -12,7 +12,7 @@ bundles = {
 	'all-js': Bundle(
 		'js/appInit.js',
 		'js/i18n.js',
-		'js/fb.js',
+		'js/facebook.js',
 		'js/spriteFactory.js',
 		'js/menu.js',
 		'js/options.js',
