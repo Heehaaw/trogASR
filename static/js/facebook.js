@@ -4,77 +4,49 @@
  */
 $.app.fb = function($) {
 
-	var fbIframeTemplateId = 'tpl_fbIframe';
+	var fbWidgetTemplateId = 'tpl_fbWidget';
+	var userInfoItemTemplateId = 'tpl_userInfoItem';
 	var fbHolderId = '#fbHolder';
+	var userInfoItemClass = '.userInfoItem-wrapper';
 
 	var appId = '935335873184642';
-	var domain = 'localhost';
-	var href = 'http://' + domain + ':5000';
-	var channelOrigin = href + '/f1c6eecfc';
-	var channel = 'http://static.ak.facebook.com/connect/xd_arbiter/6Dg4oLkBbYq.js?version=41#cb=f36ec96e28&domain=' + domain + '&origin=' + encodeURIComponent(channelOrigin) + '&relation=parent.parent';
+	var href = 'http://192.168.2.4';
 
-	var widgetTypes = {
+	var widgets = {
 		LIKE: {
 			id: 'LIKE',
-			type: 'like',
-			width: {
-				cs: '190px',
-				en: '160px'
+			type: 'fb-like',
+			data: {
+				href: href,
+				layout: 'button_count',
+				action: 'like',
+				'show-faces': 'false',
+				share: true
 			}
 		},
 		LOGIN: {
 			id: 'LOGIN',
-			type: 'login_button',
-			width: {
-				cs: '95px',
-				en: '80px'
+			type: 'fb-login-button',
+			data: {
+				'max-rows': 1,
+				size: 'medium',
+				'show-faces': false,
+				'auto-logout-link': true
 			}
 		}
-	};
-	var widgetLocales = {
-		en: 'en_US',
-		cs: 'cs_CZ'
 	};
 
 	var createWidgets = function() {
 
-		var currentLocale = $.app.i18n.getCurrentLocale();
-		var widgetLocale = widgetLocales[currentLocale] || '';
-
-		var htmlBuffer = $.app.templates.process(fbIframeTemplateId, {
-				widgetType: widgetTypes.LOGIN.type,
-				appId: appId,
-				locale: widgetLocale,
-				urlParams: {
-					auto_logout_link: true,
-					channel: encodeURIComponent(channel),
-					max_rows: 1,
-					size: 'medium',
-					sdk: 'joey'
-				},
-				styles: {
-					width: widgetTypes.LOGIN.width[currentLocale]
-				}
+		var htmlBuffer = $.app.templates.process(fbWidgetTemplateId, {
+				widgetType: widgets.LIKE.type,
+				data: widgets.LIKE.data
 			}
 		);
 
-		htmlBuffer += $.app.templates.process(fbIframeTemplateId, {
-				widgetType: widgetTypes.LIKE.type,
-				appId: appId,
-				locale: widgetLocale,
-				urlParams: {
-					href: encodeURIComponent(href),
-					color_scheme: 'dark',
-					layout: 'button_count',
-					share: true,
-					show_faces: false,
-					sdk: 'joey'
-				},
-				styles: {
-					width: widgetTypes.LIKE.width[currentLocale],
-					position: 'relative',
-					top: '1px'
-				}
+		htmlBuffer += $.app.templates.process(fbWidgetTemplateId, {
+				widgetType: widgets.LOGIN.type,
+				data: widgets.LOGIN.data
 			}
 		);
 
@@ -85,24 +57,41 @@ $.app.fb = function($) {
 
 		createWidgets();
 
+		var userLocale = navigator.language || navigator.userLanguage || 'en_US';
+		userLocale = userLocale.replace('-', '_');
+
 		$.ajaxSetup({
 			cache: true
 		});
 
-		$.getScript('https://connect.facebook.net/en_US/all.js', function() {
+		$.getScript('https://connect.facebook.net/' + userLocale + '/all.js', function() {
+
+			FB.Event.subscribe('auth.statusChange', function(response) {
+
+				var $fbHolder = $(fbHolderId);
+				$fbHolder.find(userInfoItemClass).remove();
+
+				if(response.status === 'connected') {
+					FB.api('/me?fields=name,picture', function(response) {
+						$fbHolder.prepend($.app.templates.process(userInfoItemTemplateId, {
+							imageUrl: response.picture.data.url,
+							userName: response.name
+						}));
+					});
+				}
+			});
 
 			FB.init({
 				appId: appId,
 				cookie: true,
+				status: true,
+				xfbml: true,
 				version: 'v2.2'
 			});
-
 		});
 	};
 
 	var reset = function() {
-		$(fbHolderId).empty();
-		createWidgets();
 	};
 
 	var me = {

@@ -20,6 +20,8 @@
     {% include 'components/letter.html' %}
     {% include 'components/localeSelectorItem.html' %}
     {% include 'components/facebookIframe.html' %}
+    {% include 'components/facebookWidget.html' %}
+    {% include 'components/userInfoItem.html' %}
 
     <div id="letter-metrics" ></div>
 
@@ -33,17 +35,7 @@
     <header id="header">
           <div id="localeSelector"></div>
           <h1>HEADER</h1>
-          <div id="fbHolder">
-{#            <div class="fb-login-button" data-max-rows="1" data-size="medium" data-auto-logout-link="true"></div>#}
-{#            <div class="fb-like" data-share="true" data-send="true" data-colorscheme="dark"  data-layout="button_count" data-show-faces="false"></div>#}
-{#            <iframe name="fbae297b8"#}
-{#                    frameborder="0"#}
-{#                    allowtransparency="true"#}
-{#                    scrolling="no"#}
-{#                    src="http://www.facebook.com/plugins/login_button.php?app_id=935335873184642&amp;auto_logout_link=true&amp;channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2F6Dg4oLkBbYq.js%3Fversion%3D41%23cb%3Df36ec96e28%26domain%3Dlocalhost%26origin%3Dhttp%253A%252F%252Flocalhost%253A5000%252Ff1c6eecfc%26relation%3Dparent.parent&amp;container_width=123&amp;locale=en_US&amp;max_rows=1&amp;sdk=joey&amp;size=medium"#}
-{#                    class="fbIframe"></iframe>#}
-          </div>
-
+          <div id="fbHolder"></div>
     </header>
 
     <nav id="menu"></nav>

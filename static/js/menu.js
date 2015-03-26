@@ -94,19 +94,24 @@ $.app.menu = function($) {
 
 		var $localeSelector = $(localeSelectorId);
 
-		for(var loc in $.app.i18n.locale) {
+		var locale = $.app.i18n.locale;
 
-			var sel = $.app.templates.process(localeSelectorItemTemplateId, {
-				data: loc,
-				selectorCls: loc
-			});
+		for(var loc in locale) {
 
-			var $sel = $(sel).on('click', function() {
-				$.app.i18n.setCurrentLocale($(this).data('locale'));
-				$.app.reset();
-			});
+			if(locale.hasOwnProperty(loc)) {
 
-			$localeSelector.append($sel);
+				var $sel = $($.app.templates.process(localeSelectorItemTemplateId, {
+					data: loc,
+					selectorCls: loc
+				}));
+
+				$sel.on('click', function() {
+					$.app.i18n.setCurrentLocale($(this).data('locale'));
+					$.app.reset();
+				});
+
+				$localeSelector.append($sel);
+			}
 		}
 	};
 

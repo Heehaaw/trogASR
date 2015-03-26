@@ -5,5 +5,5 @@
           scrolling="no"
           src="https://www.facebook.com/plugins/<%=widgetType%>.php?app_id=<%=appId%>&amp;locale=<%=locale%><% for(var name in urlParams){ %>&amp;<%=name%>=<%=urlParams[name]%><% } %>"
           class="fbIframe"
-          style="<% for (var name in styles) { %><%=name%>:<%=styles[name]%>; <% } %>"></iframe>
+          style="<% for (var name in styles){ %><%=name%>:<%=styles[name]%>; <% } %>"></iframe>
 </script>

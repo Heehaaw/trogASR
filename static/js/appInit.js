@@ -80,7 +80,7 @@
 			cmp.reset();
 		}
 
-		$.app.loader.delayedHide(500);
+		$.app.loader.delayedHide(1000);
 	};
 
 	$.app.initialize = function() {

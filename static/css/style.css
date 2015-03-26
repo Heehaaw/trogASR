@@ -18,22 +18,24 @@ header {
     height: 3.5%;
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 #localeSelector {
-    display: inline-block;
-    margin-top: auto;
-    margin-bottom: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     font-size: 0;
     width: 33%;
+    height: 100%;
 }
 
     #localeSelector .localeSelectorItem {
         cursor: pointer;
         display: inline-block;
-        width: 10%;
-        height: 1.1vw;
+        width: 9%;
+        height: 70%;
     }
 
         #localeSelector .localeSelectorItem.cs {
@@ -48,13 +50,19 @@ header {
 
 
 #fbHolder {
-    margin-top: auto;
-    margin-bottom: auto;
-    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     width: 33%;
+    height: 100%;
     text-align: right;
     z-index: 100;
+    transform-style: preserve-3d;
 }
+
+    #fbHolder > div {
+        margin-right: 2%;
+    }
 
     #fbHolder .fbIframe {
         border: none;
@@ -129,7 +137,7 @@ footer {
 #menu, #options {
     background-color: rgba(0, 0, 0, 0.5);
     box-shadow:
-    0.6vw 1.5vw 2.1vw 1vw rgba(0,0,0,0.4);
+        0.6vw 1.5vw 2.1vw 1vw rgba(0,0,0,0.4);
     padding-top: 5%;
     padding-bottom: 7%;
 }
@@ -138,11 +146,11 @@ footer {
         left: -35%;
     }
 
-    #menu:before, #menu:after, #options:before, #options:after {
+    #menu:before, #menu:after {
         content: "";
     }
 
-    #menu:after, #options:after {
+    #menu:after {
         clear: both;
     }
 
@@ -152,37 +160,36 @@ footer {
         display: table;
     }
 
-/* Blur functionality */
-
-    #menu .menuItem {
-        cursor: pointer;
-        font-size: 0;
-        text-transform: none;
-        z-index: 1;
-        box-shadow:
-            0 0 0 0.3vw rgba(255, 255, 255, 1),
-            0.1vw 0.1vw 0.3vw 0.5vw rgba(0, 0, 0, 0.2);
-        transition:
-            opacity 0.4s linear,
-            transform 0.4s ease-in-out,
-            box-shadow 0.4s ease-in-out;
-        transform-origin: 0% 50%;
-    }
-
-        #menu .menuItem.blur {
-            box-shadow: 0 0 0.7vw 0.3vw rgba(255,255,255,1);
-            transform: scale(0.9);
-            opacity: 0.7;
-        }
-
-        #menu .menuItem.active, #menu .menuItem.clicked {
-            transform: scale(1.03);
+        #menu .menuItem-wrapper .menuItem {
+            cursor: pointer;
+            font-size: 0;
+            text-transform: none;
+            z-index: 1;
             box-shadow:
-                0 0 0 0.4vw rgba(255,255,255,1),
-                0.4vw 0.7vw 0.7vw 0.3vw rgba(0,0,0,0.4);
-            z-index: 100;
-            opacity: 1;
+                0 0 0 0.3vw rgba(255, 255, 255, 1),
+                0.1vw 0.1vw 0.3vw 0.5vw rgba(0, 0, 0, 0.2);
+            transition:
+                opacity 0.4s linear,
+                transform 0.4s ease-in-out,
+                box-shadow 0.4s ease-in-out;
+            transform-origin: 0% 50%;
+            transform-style: preserve-3d;
         }
+
+            #menu .menuItem-wrapper .menuItem.blur {
+                box-shadow: 0 0 0.7vw 0.3vw rgba(255,255,255,1);
+                transform: scale(0.9);
+                opacity: 0.7;
+            }
+
+            #menu .menuItem-wrapper .menuItem.active, #menu .menuItem-wrapper .menuItem.clicked {
+                transform: scale(1.03);
+                box-shadow:
+                    0 0 0 0.4vw rgba(255,255,255,1),
+                    0.4vw 0.7vw 0.7vw 0.3vw rgba(0,0,0,0.4);
+                z-index: 100;
+                opacity: 1;
+            }
 
 #options {
     height: 0;
@@ -198,6 +205,14 @@ footer {
     display: table;
 }
 
+    #options:before, #options:after {
+        content: "";
+    }
+
+    #options:after {
+       clear: both;
+    }
+
     #options.show {
         right: 0;
         height: 88%
@@ -208,45 +223,70 @@ footer {
         margin-left: 3%;
     }
 
-    #options .optionsLabel-wrapper {
-        width: 35%;
-        float: left;
-    }
+        #options .optionsItem-wrapper .optionsLabel-wrapper {
+            width: 35%;
+            float: left;
+        }
 
-    #options .optionsLabel {
-        font-size: 0;
-        float: right;
-        box-shadow:
-            0 0 0 0.1vw rgba(255, 255, 255, 1),
-            0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
-    }
+            #options .optionsItem-wrapper .optionsLabel-wrapper .optionsLabel {
+                font-size: 0;
+                float: right;
+                box-shadow:
+                    0 0 0 0.1vw rgba(255, 255, 255, 1),
+                    0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+            }
 
-    #options .optionsLeft {
-        background: url('../img/arrow-left.png') no-repeat right top;
-        margin-left: 3%;
-    }
+        #options .optionsItem-wrapper .optionsLeft {
+            background: url('../img/arrow-left.png') no-repeat right top;
+            margin-left: 3%;
+            background-size: contain;
+            display: inline-block;
+            cursor: pointer;
+        }
 
-    #options .optionsRight {
-        background: url('../img/arrow-right.png') no-repeat right top;
-    }
+        #options .optionsItem-wrapper .optionsRight {
+            background: url('../img/arrow-right.png') no-repeat right top;
+            background-size: contain;
+            display: inline-block;
+            cursor: pointer;
+        }
 
-    #options .optionsLeft, #options .optionsRight {
-        background-size: contain;
+        #options .optionsItem-wrapper .optionsItem {
+            display: inline-block;
+            margin-left: 1%;
+            margin-right: 1%;
+            width: 45%;
+            font-size: 200%;
+            color: white;
+            vertical-align: top;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow:
+                0 0 0 0.07vw rgba(255, 255, 255, 1),
+                0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+        }
+
+.userInfoItem-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    right: 1%;
+    height: 100%;
+}
+
+    .userInfoItem-wrapper .userInfoImage {
         display: inline-block;
-        cursor: pointer;
+        position: relative;
+        right: 5%;
+        width: 1.6vw;
+        height: 80%;
+        border-radius: 20%;
     }
 
-    #options .optionsItem {
+    .userInfoItem-wrapper .userName {
         display: inline-block;
-        margin-left: 1%;
-        margin-right: 1%;
-        width: 45%;
-        font-size: 200%;
         color: white;
-        vertical-align: top;
-        text-align: center;
-        background: rgba(0, 0, 0, 0.2);
-        box-shadow:
-            0 0 0 0.07vw rgba(255, 255, 255, 1),
-            0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+        font-size: 160%;
+        font-weight: bold;
+        height: 80%;
     }

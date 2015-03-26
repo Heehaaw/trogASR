@@ -42,7 +42,9 @@ $.app.options = function($) {
 		var ord = [];
 		var len = 0;
 		for(var val in values) {
-			ord[len++] = values[val];
+			if(values.hasOwnProperty(val)) {
+				ord[len++] = values[val];
+			}
 		}
 
 		var index = 0;
