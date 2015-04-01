@@ -9,15 +9,12 @@ $.app.fb = function($) {
 	var fbHolderId = '#fbHolder';
 	var userInfoItemClass = '.userInfoItem-wrapper';
 
-	var appId = '935335873184642';
-	var href = 'http://192.168.2.4';
-
 	var widgets = {
 		LIKE: {
 			id: 'LIKE',
 			type: 'fb-like',
 			data: {
-				href: href,
+				href: 'http://' + $.app.host,
 				layout: 'button_count',
 				action: 'like',
 				'show-faces': 'false',
@@ -82,7 +79,7 @@ $.app.fb = function($) {
 			});
 
 			FB.init({
-				appId: appId,
+				appId: $.app.appId,
 				cookie: true,
 				status: true,
 				xfbml: true,

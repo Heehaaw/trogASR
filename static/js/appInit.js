@@ -4,8 +4,9 @@
  */
 (function($) {
 
-	// registering a jQuery plugin
-	$.app = {};
+	if(!$.app){
+		$.app = {};
+	}
 
 	var idPrefix = 'x-id-';
 	var idOrd = 0;

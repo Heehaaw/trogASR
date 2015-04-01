@@ -10,8 +10,20 @@ $.app.menu = function($) {
 	var localeSelectorId = '#localeSelector';
 	var blurCls = 'blur';
 	var activeCls = 'active';
-	var clickedCls = 'clicked';
 	var hideCls = 'hide';
+
+	var createItem = function(label, onClick) {
+
+		var $sprite = $($.app.templates.process(menuItemTemplateId, {
+			value: $.app.spriteFactory.createWordSprite(label)
+		}));
+
+		if($.isFunction(onClick)) {
+			$sprite.on('click', onClick);
+		}
+
+		return $sprite;
+	};
 
 	var createMenuItems = function() {
 
@@ -29,29 +41,17 @@ $.app.menu = function($) {
 			}
 		});
 
-		var $menuItem = $($.app.templates.process(menuItemTemplateId, {
-			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_PLAY)
-		}));
-		$menuItem.on('click', function() {
+		$menu.append(createItem($.app.i18n.t.MENU_PLAY, function() {
 			$.app.options.hide();
 			hide();
-		});
-
-		$menu.append($menuItem);
-
-		$menuItem = $($.app.templates.process(menuItemTemplateId, {
-			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_OPTIONS)
 		}));
-		$menuItem.on('click', function() {
+
+		$menu.append(createItem($.app.i18n.t.MENU_OPTIONS, function() {
 			$.app.options.show();
 			show();
-		});
-		$menu.append($menuItem);
-
-		$menuItem = $($.app.templates.process(menuItemTemplateId, {
-			value: $.app.spriteFactory.createWordSprite($.app.i18n.t.MENU_LEADER_BOARDS)
 		}));
-		$menu.append($menuItem);
+
+		$menu.append(createItem($.app.i18n.t.MENU_LEADER_BOARDS));
 
 		// We have to add the items first so they acquire context
 		var $menuItems = $menu.find('.menuItem');
@@ -72,20 +72,21 @@ $.app.menu = function($) {
 
 		$menuItems.on('click', function() {
 			var $me = $(this);
-			$menuItems.not($me).removeClass(clickedCls).addClass(blurCls);
-			$me.addClass(clickedCls);
+			$menuItems.not($me).removeClass(activeCls).addClass(blurCls);
 			$clicked = $me;
 		});
 
 		$menuItems.on('mouseleave', function() {
 			clearTimeout(timeoutHandle);
 			var $me = $(this);
-			$menuItems.removeClass(activeCls);
-			if(!$clicked) {
-				$menuItems.removeClass(blurCls);
+			if($clicked) {
+				if($clicked != $me){
+					$me.removeClass(activeCls).addClass(blurCls);
+				}
+				$clicked.removeClass(blurCls).addClass(activeCls);
 			}
-			else if($clicked != $me) {
-				$me.addClass(blurCls);
+			else {
+				$menuItems.removeClass(blurCls).removeClass(activeCls);
 			}
 		});
 	};

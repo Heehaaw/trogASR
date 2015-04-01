@@ -15,8 +15,8 @@ Environment(app).register(assets.bundles)
 
 @app.route('/')
 def home():
-	return render_template('index.html')
+	return render_template('index.html', host=configuration.host, appId=configuration.appId)
 
 
 if __name__ == '__main__':
-	app.run(host='192.168.2.4')
+	app.run(host=configuration.host, port=configuration.port)
