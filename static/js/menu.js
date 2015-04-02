@@ -2,7 +2,7 @@
  * Author: Janek Milota
  * Date: 9.01.2015
  */
-$.app.menu = function($) {
+(function($) {
 
 	var menuId = '#menu';
 	var menuItemTemplateId = 'tpl_menuItem';
@@ -80,7 +80,7 @@ $.app.menu = function($) {
 			clearTimeout(timeoutHandle);
 			var $me = $(this);
 			if($clicked) {
-				if($clicked != $me){
+				if($clicked != $me) {
 					$me.removeClass(activeCls).addClass(blurCls);
 				}
 				$clicked.removeClass(blurCls).addClass(activeCls);
@@ -145,6 +145,7 @@ $.app.menu = function($) {
 		show: show
 	};
 
-	return $.app.registerComponent(me);
-}(jQuery);
+	$.app.menu = $.app.registerComponent(me);
+
+})(jQuery);
 

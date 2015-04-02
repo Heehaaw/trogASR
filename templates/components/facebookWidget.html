@@ -1,3 +1,7 @@
 <script type="text/html" id="tpl_fbWidget">
-    <div id="<%=id%>" class="<%=widgetType%>" <% for(var name in data) { %> data-<%=name%>="<%=data[name]%>"<% } %> ></div>
+    <div id="<%=id%>" class="<%=widgetType%>"
+      <% for(var name in data) { %>
+        data-<%=name%>="<%=data[name]%>"
+      <% } %> >
+    </div>
 </script>

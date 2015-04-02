@@ -2,7 +2,7 @@
  * Author: Janek Milota
  * Date: 23.03.2015
  */
-$.app.fb = function($) {
+(function($) {
 
 	var fbWidgetTemplateId = 'tpl_fbWidget';
 	var userInfoItemTemplateId = 'tpl_userInfoItem';
@@ -96,6 +96,6 @@ $.app.fb = function($) {
 		reset: reset
 	};
 
-	return $.app.registerComponent(me);
+	$.app.fb = $.app.registerComponent(me);
 
-}(jQuery);
+})(jQuery);

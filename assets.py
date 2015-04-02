@@ -10,12 +10,14 @@ bundles = {
 		filters='cssmin'
 	),
 	'all-js': Bundle(
-		'js/appInit.js',
+		'js/app.js',
 		'js/i18n.js',
+		'js/templates.js',
 		'js/facebook.js',
 		'js/spriteFactory.js',
 		'js/menu.js',
 		'js/options.js',
+		'js/game.js',
 		output='gen/all.js',
 		filters='jsmin'
 	)

@@ -2,12 +2,14 @@
  * Author: Janek Milota
  * Date: 12.01.2015
  */
-$.app.i18n = function($) {
+(function($) {
 
 	var locale = {
 		cs: 'cs',
 		en: 'en'
 	};
+
+	var currentLocale = '';
 
 	var keys = {
 		MENU_PLAY: {
@@ -48,23 +50,20 @@ $.app.i18n = function($) {
 		}
 	};
 
+	for(var keyName in keys) {
+		var key = keys[keyName];
+		key.getText = $.proxy(function(loc) {
+			return this[loc || currentLocale];
+		}, key);
+	}
+
 	var initComponent = function() {
-
-		for(var keyName in keys) {
-			var key = keys[keyName];
-			key.getText = $.proxy(function(loc) {
-				return this[loc || currentLocale];
-			}, key);
-		}
-
 		setLocale(locale.en);
 	};
 
 	var getText = function(key, locale) {
 		return key ? (keys[key] || {})[locale || currentLocale] : undefined;
-	}
-
-	var currentLocale = '';
+	};
 
 	var getLocale = function() {
 		return currentLocale;
@@ -93,8 +92,7 @@ $.app.i18n = function($) {
 	};
 
 	var me = {
-		initComponent: function() {
-		},
+		initComponent: initComponent,
 		reset: function() {
 		},
 		getCurrentLocale: getLocale,
@@ -105,7 +103,6 @@ $.app.i18n = function($) {
 		getText: getText
 	};
 
-	initComponent();
+	$.app.i18n = $.app.registerComponent(me);
 
-	return $.app.registerComponent(me);
-}(jQuery);
+})(jQuery);

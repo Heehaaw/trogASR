@@ -2,7 +2,7 @@
  * Author: Janek Milota
  * Date: 28.02.2015
  */
-$.app.options = function($) {
+(function($) {
 
 	var optionsId = '#options';
 	var optionsItemTemplateId = 'tpl_optionsItem';
@@ -76,19 +76,16 @@ $.app.options = function($) {
 		return $item;
 	};
 
-	var getCurrentMode;
-	var getCurrentLanguage;
-
 	var createOptionItems = function() {
 
 		var $options = $(optionsId);
 
 		var $mode = createItem($.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_MODE, letterSizeMultiplier), modes);
-		getCurrentMode = $mode.getCurrent;
+		me.getCurrentMode = $mode.getCurrent;
 		$options.append($mode);
 
 		var $language = createItem($.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_GAME_LANGUAGE, letterSizeMultiplier), languages);
-		getCurrentLanguage = $language.getCurrent;
+		me.getCurrentLanguage = $language.getCurrent;
 		$options.append($language);
 	};
 
@@ -120,13 +117,12 @@ $.app.options = function($) {
 		hide: hide,
 		modes: modes,
 		getCurrentMode: function() {
-			return getCurrentMode();
 		},
 		languages: languages,
 		getCurrentLanguage: function() {
-			return getCurrentLanguage();
 		}
 	};
 
-	return $.app.registerComponent(me);
-}(jQuery);
+	$.app.options = $.app.registerComponent(me);
+
+})(jQuery);

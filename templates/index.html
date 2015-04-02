@@ -2,7 +2,9 @@
 <html>
 <head lang="en">
 
+    <meta name="author" content="Janek Milota">
     <meta charset="UTF-8">
+    <meta name="application-name" content="trogASR - The ultimate Translational Online Game using Automated Speech Recognition">
     <title>trogASR</title>
 
     {% assets 'all-css' %}
@@ -10,11 +12,15 @@
     {% endassets %}
 
     <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://demo.cloudasr.com/static/js/socket.io.js"></script>
+    <script src="http://demo.cloudasr.com/static/js/Recorder.js"></script>
+    <script src="http://demo.cloudasr.com/static/js/SpeechRecognition.js"></script>
 
     <script type="text/javascript">
-      $.app = {};
-	    $.app.host = '{{ host }}';
-	    $.app.appId = '{{ appId }}';
+      $.app = {
+        host: '{{ host }}',
+        appId: '{{ appId }}'
+      };
     </script>
 
     {% assets 'all-js' %}
@@ -28,31 +34,24 @@
     {% include 'components/facebookIframe.html' %}
     {% include 'components/facebookWidget.html' %}
     {% include 'components/userInfoItem.html' %}
+    {% include 'components/gameButton.html' %}
 
-    <div id="letter-metrics" ></div>
+    <div id="letter-metrics"></div>
 
 </head>
 <body>
 
-<div id="body">
+<header id="header">
+    <div id="localeSelector"></div>
+    <h1>HEADER</h1>
+    <div id="fbHolder"></div>
+</header>
 
-    <div id="background"></div>
-
-    <header id="header">
-          <div id="localeSelector"></div>
-          <h1>HEADER</h1>
-          <div id="fbHolder"></div>
-    </header>
-
+<section id="body">
     <nav id="menu"></nav>
-
-    <section id="section">
-        <div id="options"></div>
-    </section>
-
-    <div id="push"></div>
-
-</div>
+    <div id="options"></div>
+    <div id="game"></div>
+</section>
 
 <footer id="footer">
     Copyright &copy; 2015 Jan Milota
