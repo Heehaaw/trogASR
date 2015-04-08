@@ -47,6 +47,14 @@
 		OPTIONS_LANGUAGE_EN_CS: {
 			cs: 'Angličtina -> Čeština',
 			en: 'English -> Czech'
+		},
+		GAME_BUTTON_RECORD: {
+			cs: 'Nahrát',
+			en: 'Record'
+		},
+		GAME_BUTTON_EXIT: {
+			cs: 'Konec',
+			en: 'Exit'
 		}
 	};
 
@@ -58,7 +66,7 @@
 	}
 
 	var initComponent = function() {
-		setLocale(locale.en);
+		setLocale($.app.readCookie('locale') || locale.en);
 	};
 
 	var getText = function(key, locale) {
@@ -77,6 +85,7 @@
 			throw 'A valid locale has to be provided!';
 		}
 
+		$.app.createCookie('locale', loc, 7);
 		currentLocale = loc;
 
 		var localeVal = localeCache[loc];

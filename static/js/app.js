@@ -23,6 +23,40 @@
 		}
 	};
 
+	var createCookie = function(name, value, days) {
+		var expires;
+		if(days) {
+			var date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			expires = "; expires=" + date.toUTCString();
+		}
+		else {
+			expires = "";
+		}
+		document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+	};
+
+	var readCookie = function(name) {
+		var cookieValue = null;
+		//noinspection JSValidateTypes
+		if(document.cookie && document.cookie != '') {
+			var cookies = document.cookie.split(';');
+			for(var i = 0, len = cookies.length; i < len; i++) {
+				var cookie = $.trim(cookies[i]);
+				var offset = name.length + 1;
+				if(cookie.substring(0, offset) == (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(offset));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	};
+
+	var eraseCookie = function(name) {
+		createCookie(name, "", -1);
+	};
+
 	var components = [];
 
 	var registerComponent = function(cmp) {
@@ -75,6 +109,9 @@
 	$.app = $.extend($.app, {
 		getNextId: getNextId,
 		loader: loader,
+		createCookie: createCookie,
+		readCookie: readCookie,
+		eraseCookie: eraseCookie,
 		registerComponent: registerComponent,
 		reset: reset
 	});

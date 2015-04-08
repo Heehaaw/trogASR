@@ -5,15 +5,10 @@
 (function($) {
 
 	var optionsId = '#options';
-	var optionsItemTemplateId = 'tpl_optionsItem';
 	var optionsValueCls = '.optionsItem';
 	var optionsLeftCls = '.optionsLeft';
 	var optionsRightCls = '.optionsRight';
 	var showCls = 'show';
-
-	var letterSizeMultiplier = 0.7;
-	var arrowHeight;
-	var arrowWidth;
 
 	var modes = {
 		TIMED: {
@@ -37,7 +32,7 @@
 		}
 	};
 
-	var createItem = function(sprite, values) {
+	var createItem = function(label, values) {
 
 		var ord = [];
 		var len = 0;
@@ -48,12 +43,10 @@
 		}
 
 		var index = 0;
-		var $item = $($.app.templates.process(optionsItemTemplateId, {
-			label: sprite,
-			value: ord[index].getText(),
-			arrowHeight: arrowHeight,
-			arrowWidth: arrowWidth
-		}));
+
+		var $item = $.app.spriteFactory.createOptionsItemSprite(label, true);
+
+		$item.find(optionsValueCls).text(ord[index].getText());
 
 		$item.find(optionsLeftCls).on('click', function() {
 			if(--index < 0) {
@@ -80,20 +73,16 @@
 
 		var $options = $(optionsId);
 
-		var $mode = createItem($.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_MODE, letterSizeMultiplier), modes);
+		var $mode = createItem($.app.i18n.t.OPTIONS_MODE, modes);
 		me.getCurrentMode = $mode.getCurrent;
 		$options.append($mode);
 
-		var $language = createItem($.app.spriteFactory.createWordSprite($.app.i18n.t.OPTIONS_GAME_LANGUAGE, letterSizeMultiplier), languages);
+		var $language = createItem($.app.i18n.t.OPTIONS_GAME_LANGUAGE, languages);
 		me.getCurrentLanguage = $language.getCurrent;
 		$options.append($language);
 	};
 
 	var initComponent = function() {
-
-		arrowHeight = ($.app.spriteFactory.getLetterMetrics() * letterSizeMultiplier) >> 0;
-		arrowWidth = (arrowHeight * 1.5) >> 0;
-
 		createOptionItems();
 	};
 
@@ -106,6 +95,7 @@
 	var show = function() {
 		$(optionsId).addClass(showCls);
 	};
+
 	var hide = function() {
 		$(optionsId).removeClass(showCls);
 	};

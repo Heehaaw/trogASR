@@ -7,7 +7,6 @@
 	var fbWidgetTemplateId = 'tpl_fbWidget';
 	var userInfoItemTemplateId = 'tpl_userInfoItem';
 	var fbHolderId = '#fbHolder';
-	var userInfoItemClass = '.userInfoItem-wrapper';
 
 	var widgets = {
 		LIKE: {
@@ -63,17 +62,22 @@
 
 		$.getScript('https://connect.facebook.net/' + userLocale + '/all.js', function() {
 
+			var $userInfoItem = null;
+
 			FB.Event.subscribe('auth.statusChange', function(response) {
 
-				var $fbHolder = $(fbHolderId);
-				$fbHolder.find(userInfoItemClass).remove();
+				if($userInfoItem) {
+					$userInfoItem.remove();
+					$userInfoItem = null;
+				}
 
 				if(response.status === 'connected') {
 					FB.api('/me?fields=name,picture', function(response) {
-						$fbHolder.prepend($.app.templates.process(userInfoItemTemplateId, {
+						$userInfoItem = $.app.templates.process(userInfoItemTemplateId, {
 							imageUrl: response.picture.data.url,
 							userName: response.name
-						}));
+						}, true);
+						$(fbHolderId).prepend($userInfoItem);
 					});
 				}
 			});

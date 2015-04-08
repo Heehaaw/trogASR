@@ -6,7 +6,7 @@
 
 	var templateCache = {};
 
-	var process = function(str, data) {
+	var process = function(str, data, as$) {
 
 		var processFn = !/\W/.test(str)
 			? templateCache[str] = templateCache[str] || process(document.getElementById(str).innerHTML)
@@ -24,7 +24,8 @@
 
 		if(data) {
 			data.id = data.id || $.app.getNextId();
-			return processFn(data);
+			var result = processFn(data);
+			return as$ ? $(result) : result;
 		}
 		else {
 			return processFn;

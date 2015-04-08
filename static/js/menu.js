@@ -14,9 +14,9 @@
 
 	var createItem = function(label, onClick) {
 
-		var $sprite = $($.app.templates.process(menuItemTemplateId, {
+		var $sprite = $.app.templates.process(menuItemTemplateId, {
 			value: $.app.spriteFactory.createWordSprite(label)
-		}));
+		}, true);
 
 		if($.isFunction(onClick)) {
 			$sprite.on('click', onClick);
@@ -29,21 +29,13 @@
 
 		var $menu = $(menuId);
 
-		$menu.on('click', function() {
-			if(hidden) {
-				$menu.removeClass(hideCls);
-			}
-		});
-
-		$menu.on('mouseleave', function() {
-			if(hidden) {
-				$menu.addClass(hideCls);
-			}
-		});
-
 		$menu.append(createItem($.app.i18n.t.MENU_PLAY, function() {
+			$.app.loader.show();
 			$.app.options.hide();
 			hide();
+			$menuItems.removeClass(activeCls).removeClass(blurCls);
+			$clicked = null;
+			$.app.game.start();
 		}));
 
 		$menu.append(createItem($.app.i18n.t.MENU_OPTIONS, function() {
@@ -101,10 +93,10 @@
 
 			if(locale.hasOwnProperty(loc)) {
 
-				var $sel = $($.app.templates.process(localeSelectorItemTemplateId, {
+				var $sel = $.app.templates.process(localeSelectorItemTemplateId, {
 					data: loc,
 					selectorCls: loc
-				}));
+				}, true);
 
 				$sel.on('click', function() {
 					$.app.i18n.setCurrentLocale($(this).data('locale'));
@@ -116,16 +108,12 @@
 		}
 	};
 
-	var hidden = false;
-
 	var hide = function() {
 		$(menuId).addClass(hideCls);
-		hidden = true;
 	};
 
 	var show = function() {
 		$(menuId).removeClass(hideCls);
-		hidden = false;
 	};
 
 	var initComponent = function() {
@@ -135,6 +123,7 @@
 
 	var reset = function() {
 		$(menuId).empty();
+		show();
 		createMenuItems();
 	};
 

@@ -4,7 +4,8 @@
 
     <meta name="author" content="Janek Milota">
     <meta charset="UTF-8">
-    <meta name="application-name" content="trogASR - The ultimate Translational Online Game using Automated Speech Recognition">
+    <meta name="application-name"
+          content="trogASR - The ultimate Translating Online Game using Automated Speech Recognition">
     <title>trogASR</title>
 
     {% assets 'all-css' %}
@@ -14,13 +15,14 @@
     <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="http://demo.cloudasr.com/static/js/socket.io.js"></script>
     <script src="http://demo.cloudasr.com/static/js/Recorder.js"></script>
-    <script src="http://demo.cloudasr.com/static/js/SpeechRecognition.js"></script>
+    <script src="../static/js/SpeechRecognition.js"></script>
+    {#<script src="http://demo.cloudasr.com/static/js/SpeechRecognition.js"></script>#}
 
     <script type="text/javascript">
-      $.app = {
-        host: '{{ host }}',
-        appId: '{{ appId }}'
-      };
+        $.app = {
+            host: '{{ host }}',
+            appId: '{{ appId }}'
+        };
     </script>
 
     {% assets 'all-js' %}
@@ -44,6 +46,7 @@
 <header id="header">
     <div id="localeSelector"></div>
     <h1>HEADER</h1>
+
     <div id="fbHolder"></div>
 </header>
 
