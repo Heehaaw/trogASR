@@ -13,13 +13,15 @@ html, body {
 }
 
 header {
-    background-color: black;
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    box-shadow: 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
     color: white;
     height: 3.5%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 50;
 }
 
 #body {
@@ -45,8 +47,49 @@ header {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: antiquewhite;
-    z-index: 100000;
+    background-color: #333;
+    z-index: 100;
+}
+
+#logoLoader {
+    position: absolute;
+    width: 35%;
+    height: 70%;
+    top: 10%;
+    left: 32.5%;
+    background: white;
+    opacity: 0.9;
+    border-radius: 35%;
+    box-shadow: 0 0 0 0.07vw rgba(255, 255, 255, 0.5), 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+    transition: top 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 101;
+}
+
+#logoLoader.hidden {
+    top: -51%;
+    transform: scale(0.7);
+    transition: top 1s ease-in-out, transform 1s ease-in-out;
+}
+
+#logoLoader:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("../img/logo.png") no-repeat center bottom;
+    background-size: contain;
+    border-radius: 35%;
+}
+
+#logoLoader:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("../img/gears.gif") no-repeat center bottom;
+    background-size: contain;
+
+    border-radius: 35%;
 }
 
 .float-left {
@@ -112,12 +155,23 @@ footer {
     height: 100%;
 }
 
+#banner {
+    background: url('../img/left-banner.png') no-repeat left bottom;
+    background-size: contain;
+    width: 30%;
+    height: 43%;
+    position: absolute;
+    left: 2%;
+    bottom: 1%;
+    z-index: -102;
+}
+
 #menu {
     width: 40%;
     float: left;
     position: relative;
     left: 0;
-    border-radius: 0 20% 20%;
+    border-radius: 0 70% 20% 20%;
     transition: left 0.5s ease-in-out;
 }
 
@@ -166,7 +220,7 @@ footer {
 #menu .menuItem-wrapper .menuItem.active, #menu .menuItem-wrapper .menuItem.clicked {
     transform: scale(1.03);
     box-shadow: 0 0 0 0.4vw rgba(255, 255, 255, 1), 0.4vw 0.7vw 0.7vw 0.3vw rgba(0, 0, 0, 0.4);
-    z-index: 100;
+    z-index: 10;
     opacity: 1;
 }
 
@@ -176,7 +230,7 @@ footer {
     float: right;
     position: relative;
     right: -58%;
-    border-radius: 20% 0 20% 20%;
+    border-radius: 40% 0 20% 20%;
     transition: right 0.5s ease-in-out, height 0.5s ease-in-out;
     transform-origin: 0% 15%;
     display: table;
@@ -276,9 +330,16 @@ footer {
     justify-content: center;
 }
 
+.gameButton-wrapper {
+    cursor: pointer;
+    box-shadow: 0 0 0 0.07vw rgba(255, 255, 255, 0.5), 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+    border-radius: 70%;
+    background: rgba(0, 0, 0, 0.1);
+}
+
 .recordBtn.gameButton-wrapper {
     width: 13%;
-    height: 20%;
+    height: 22%;
     position: absolute;
     bottom: 2%;
     left: 43.5%;
@@ -287,7 +348,6 @@ footer {
 .recordBtn .gameButton {
     background: url('http://demo.cloudasr.com/static/img/microphone.png') no-repeat center top;
     background-size: contain !important;
-    cursor: pointer;
     width: 93%;
     height: 80%;
 }
@@ -298,16 +358,26 @@ footer {
 
 .exitBtn.gameButton-wrapper {
     width: 8%;
-    height: 12.5%;
+    height: 11%;
     position: absolute;
-    bottom: 1%;
-    left: 35%;
+    bottom: 2%;
+    left: 57%;
 }
 
 .exitBtn .gameButton {
     background: url('../img/close-button.png') no-repeat center top;
     background-size: contain !important;
-    cursor: pointer;
     width: 100%;
     height: 60%;
+}
+
+.gameWord, .gameResult {
+    position: absolute;
+}
+
+.gameInfo {
+    position: absolute;
+    box-shadow: 0 0 0 0.07vw rgba(255, 255, 255, 0.5), 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
+    font-size: 120%;
 }

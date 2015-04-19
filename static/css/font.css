@@ -102,6 +102,10 @@
     background: url('../img/font/Z.png') no-repeat right top;
 }
 
+.letter-SPACE {
+    background: none;
+}
+
 .letter {
     background-size: cover;
     display: inline-block;
@@ -110,4 +114,8 @@
 #letter-metrics {
     width: 3%;
     display: none;
+}
+
+.word {
+    font-size: 0;
 }

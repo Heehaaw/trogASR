@@ -14,12 +14,17 @@
 	var loader = {
 		show: function() {
 			$('#loader').show();
+			$('#logoLoader').removeClass('hidden');
 		},
 		hide: function() {
 			$('#loader').fadeOut(500);
+			$('#logoLoader').addClass('hidden');
 		},
 		delayedHide: function(time) {
 			$('#loader').delay(time).fadeOut(500);
+			setTimeout(function() {
+				$('#logoLoader').addClass('hidden');
+			}, time);
 		}
 	};
 

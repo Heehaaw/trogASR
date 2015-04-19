@@ -55,6 +55,18 @@
 		GAME_BUTTON_EXIT: {
 			cs: 'Konec',
 			en: 'Exit'
+		},
+		GAME_INFO: {
+			cs: 'Zmáčkni "NAHRÁT" a řekni slovo ',
+			en: 'Press "RECORD" and say the word below '
+		},
+		GAME_INFO_IN_cs: {
+			cs: 'v češtině',
+			en: 'in Czech'
+		},
+		GAME_INFO_IN_en: {
+			cs: 'v angličtině',
+			en: 'in English'
 		}
 	};
 
