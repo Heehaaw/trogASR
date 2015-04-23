@@ -19,9 +19,48 @@
 	var gameButtonLetterSizeMultiplier = 0.5;
 
 	var letterMap = {
-		A: 'A', Á: 'A', B: 'B', C: 'C', Č: 'C', D: 'D', Ď: 'D', E: 'E', É: 'E', Ě: 'E', F: 'F', G: 'G', H: 'H', I: 'I',
-		Í: 'I', J: 'J', K: 'K', L: 'L', M: 'M', N: 'N', Ň: 'N', O: 'O', Ó: 'O', P: 'P', Q: 'Q', R: 'R', Ř: 'R', S: 'S',
-		Š: 'S', T: 'T', Ť: 'T', U: 'U', Ú: 'U', Ů: 'U', V: 'V', W: 'W', X: 'X', Y: 'Y', Ý: 'Y', Z: 'Z', Ž: 'Z', ' ': 'SPACE'
+		A: 'A',
+		Á: 'A',
+		B: 'B',
+		C: 'C',
+		Č: 'C',
+		D: 'D',
+		Ď: 'D',
+		E: 'E',
+		É: 'E',
+		Ě: 'E',
+		F: 'F',
+		G: 'G',
+		H: 'H',
+		I: 'I',
+		Í: 'I',
+		J: 'J',
+		K: 'K',
+		L: 'L',
+		M: 'M',
+		N: 'N',
+		Ň: 'N',
+		O: 'O',
+		Ó: 'O',
+		P: 'P',
+		Q: 'Q',
+		R: 'R',
+		Ř: 'R',
+		S: 'S',
+		Š: 'S',
+		T: 'T',
+		Ť: 'T',
+		U: 'U',
+		Ú: 'U',
+		Ů: 'U',
+		V: 'V',
+		W: 'W',
+		X: 'X',
+		Y: 'Y',
+		Ý: 'Y',
+		Z: 'Z',
+		Ž: 'Z',
+		' ': 'SPACE'
 	};
 
 	var createLetterSprite = function(letter, sizeMultiplier, as$) {
@@ -30,7 +69,7 @@
 		}
 		var size = sizeMultiplier ? letterSize * sizeMultiplier : letterSize;
 		var letterCls = letterMap[letter.toUpperCase()];
-		if(letterCls === 'SPACE'){
+		if(letterCls === 'SPACE') {
 			size /= 2;
 		}
 		size >>= 0;
@@ -43,12 +82,17 @@
 	var createWordSprite = function(word, sizeMultiplier, as$) {
 		var htmlBuffer = '';
 		var len = word.length;
+		var spaceCount = 0;
 		for(var i = 0; i < len; i++) {
-			htmlBuffer += createLetterSprite(word[i], sizeMultiplier);
+			var letter = word[i];
+			if(letter === ' ') {
+				spaceCount++;
+			}
+			htmlBuffer += createLetterSprite(letter, sizeMultiplier);
 		}
 		var size = (sizeMultiplier ? letterSize * sizeMultiplier : letterSize) >> 0;
 		return $.app.templates.process(wordTemplateId, {
-			width: len * size + 1,
+			width: size * (len - spaceCount / 2) + 1,
 			height: size,
 			content: htmlBuffer
 		}, as$);

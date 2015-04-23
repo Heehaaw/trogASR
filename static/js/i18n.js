@@ -67,6 +67,10 @@
 		GAME_INFO_IN_en: {
 			cs: 'v angličtině',
 			en: 'in English'
+		},
+		GAME_INFO_OPTIONS_TITLE: {
+			cs: 'Určitě jste měli na mysli některé z následujících:',
+			en: 'You surely meant one of the following:'
 		}
 	};
 
