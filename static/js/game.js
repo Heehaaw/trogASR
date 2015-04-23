@@ -132,49 +132,37 @@
 			w *= scale;
 			h *= scale;
 
-			$word.animate({
-				top: -displayHTop / 2,
-				opacity: 0
-			}, {
-				duration: 300,
-				complete: function() {
+			$word
+				.animate({
+					top: -displayHTop / 2,
+					opacity: 0
+				}, 300, function() {
 					$word
 						.css({
 							left: stackW / 2 - w / 2,
 							top: -h,
 							opacity: 1,
-							transform: 'scale(' + scale + ')',
-							'z-index': -5
+							transform: 'scale(' + scale + ')'
 						})
 						.appendTo($wordStack)
 						.animate({
 							top: stackTop -= h
-						}, {
-							duration: 300,
-							complete: function() {
-								if(stackTop < stackH * 0.25) {
-									var offset = stackTop - (stackTop += stackH * 0.5);
-									$wordStack.children().animate({
-										top: '-=' + offset
-									}, 300)
-								}
-								newRound();
+						}, 300, function() {
+							if(stackTop < stackH * 0.25) {
+								var offset = stackTop - (stackTop += stackH * 0.5);
+								$wordStack.children().animate({
+									top: '-=' + offset
+								}, 300, function() {
+									var $me = $(this);
+									if($me.position().top > stackH) {
+										$me.remove();
+									}
+								});
 							}
+							newRound();
 						});
-				}
-			})
+				});
 		};
-
-		var particles = [];
-		var particleCount = 13;
-		var angleDelta = Math.PI * 2 / particleCount;
-		var s = $.app.spriteFactory.getLetterMetrics() * 0.5;
-		for(i = 0; i < particleCount; i++) {
-			particles.push(
-				$('<div/>')
-					.addClass(bubbleDebrisClass)
-					.css({width: s, height: s}));
-		}
 
 		var failCallback = function() {
 
@@ -183,35 +171,37 @@
 
 			var w = $word.width();
 			var h = $word.height();
-			var dir = [];
 			var angle = 0;
 			var startX = w / 2;
 			var startY = h / 2;
+			var particleCount = 13;
+			var angleDelta = Math.PI * 2 / particleCount;
+			var particleSize = $.app.spriteFactory.getLetterMetrics() * 0.5;
 
 			for(i = 0; i < particleCount; i++) {
-				dir.push([
-					startX + Math.cos(angle) * (w / 3 + Math.random() * w / 4),
-					startY + Math.sin(angle) * (h + Math.random() * h * 1.5)
-				]);
-				particles[i]
-					.css({left: startX, top: startY})
-					.appendTo($word);
+				$('<div/>')
+					.addClass(bubbleDebrisClass)
+					.css({
+						left: startX,
+						top: startY,
+						width: particleSize,
+						height: particleSize
+					})
+					.appendTo($word)
+					.animate({
+						left: startX + Math.cos(angle) * (w / 3 + Math.random() * w / 4),
+						top: startY + Math.sin(angle) * (h + Math.random() * h * 1.5),
+						width: particleSize / 10,
+						height: particleSize / 10,
+						opacity: 0
+					}, 500);
 				angle += angleDelta;
 			}
 
-			for(var i = 0; i < particleCount; i++) {
-				var $p = particles[i];
-				$p.show().animate({
-					top: dir[i][1],
-					left: dir[i][0],
-					width: $p.width() / 10,
-					height: $p.height() / 10,
-					opacity: 0
-				}, 500, function() {
-					$p.detach()
-				});
-			}
-			$word.fadeOut(500, newRound);
+			$word.fadeOut(550, function() {
+				$word.remove();
+				newRound();
+			});
 		};
 
 		var meanings = $word.meanings;
@@ -331,10 +321,7 @@
 			.append($('<div>')
 				.text($.app.i18n.t.GAME_INFO_OPTIONS_TITLE)
 				.addClass(gameInfoClass)
-				.css({
-					top: 0,
-					left: 0
-				}))
+				.css({top: 0, left: 0}))
 			.hide()
 			.appendTo($game);
 
