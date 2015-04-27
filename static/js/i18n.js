@@ -24,21 +24,9 @@
 			cs: 'Žebříčky',
 			en: 'Leaderboards'
 		},
-		OPTIONS_MODE: {
-			cs: 'Mód',
-			en: 'Mode'
-		},
-		OPTIONS_GAME_LANGUAGE: {
+		OPTIONS_LANGUAGE: {
 			cs: 'Jazyk',
 			en: 'Language'
-		},
-		OPTIONS_MODE_TIMED: {
-			cs: 'Na čas',
-			en: 'Timed'
-		},
-		OPTIONS_MODE_STATIC: {
-			cs: 'Statický',
-			en: 'Static'
 		},
 		OPTIONS_LANGUAGE_CS_EN: {
 			cs: 'Čeština -> Angličtina',
@@ -47,6 +35,98 @@
 		OPTIONS_LANGUAGE_EN_CS: {
 			cs: 'Angličtina -> Čeština',
 			en: 'English -> Czech'
+		},
+		OPTIONS_LIVES: {
+			cs: 'Životy',
+			en: 'Lives'
+		},
+		OPTIONS_LIVES_1: {
+			cs: '1',
+			en: '1'
+		},
+		OPTIONS_LIVES_3: {
+			cs: '3',
+			en: '3'
+		},
+		OPTIONS_LIVES_5: {
+			cs: '5',
+			en: '5'
+		},
+		OPTIONS_LIVES_10: {
+			cs: '10',
+			en: '10'
+		},
+		OPTIONS_SUGGESTIONS: {
+			cs: 'Nápovědy',
+			en: 'Suggestions'
+		},
+		OPTIONS_SUGGESTIONS_2: {
+			cs: 'Maximálně 2',
+			en: 'Max 2'
+		},
+		OPTIONS_SUGGESTIONS_3: {
+			cs: 'Maximálně 3',
+			en: 'Max 3'
+		},
+		OPTIONS_SUGGESTIONS_4: {
+			cs: 'Maximálně 4',
+			en: 'Max 4'
+		},
+		OPTIONS_SUGGESTIONS_5: {
+			cs: 'Maximálně 5',
+			en: 'Max 5'
+		},
+		OPTIONS_SUGGESTIONS_6: {
+			cs: 'Maximálně 6',
+			en: 'Max 6'
+		},
+		OPTIONS_ROUND_TIME: {
+			cs: 'Čas na kolo',
+			en: 'Round time'
+		},
+		OPTIONS_ROUND_TIME_10: {
+			cs: '10 sekund',
+			en: '10 seconds'
+		},
+		OPTIONS_ROUND_TIME_15: {
+			cs: '15 sekund',
+			en: '15 seconds'
+		},
+		OPTIONS_ROUND_TIME_30: {
+			cs: '30 sekund',
+			en: '30 seconds'
+		},
+		OPTIONS_ROUND_TIME_60: {
+			cs: '1 minuta',
+			en: '1 minute'
+		},
+		OPTIONS_GAME_TIME: {
+			cs: 'Čas na hru',
+			en: 'Game time'
+		},
+		OPTIONS_GAME_TIME_30: {
+			cs: '30 sekund',
+			en: '30 seconds'
+		},
+		OPTIONS_GAME_TIME_60: {
+			cs: '1 minuta',
+			en: '1 minute'
+		},
+		OPTIONS_GAME_TIME_120: {
+			cs: '2 minuty',
+			en: '2 minutes'
+		},
+		OPTIONS_GAME_TIME_300: {
+			cs: '5 minut',
+			en: '5 minutes'
+		},
+		OPTIONS_GAME_TIME_600: {
+			cs: '10 minut',
+			en: '10 minutes'
+		},
+		OPTIONS_OFF: {
+			cs: 'Vypnuto',
+			en: 'Off'
 		},
 		GAME_BUTTON_RECORD: {
 			cs: 'Nahrát',
@@ -69,8 +149,12 @@
 			en: 'in English'
 		},
 		GAME_INFO_OPTIONS_TITLE: {
-			cs: 'Určitě jste měli na mysli některé z následujících:',
+			cs: 'Určitě jsi měl/a na mysli některé z následujících:',
 			en: 'You surely meant one of the following:'
+		},
+		GAME_INFO_END: {
+			cs: 'Konec hry! Získal/a jsi <b>{0}</b> bodů!',
+			en: 'Game over! You\'ve scored <b>{0}</b> points!'
 		}
 	};
 

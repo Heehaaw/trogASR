@@ -18,66 +18,68 @@
 	var gameWordStackClass = 'gameWordStack';
 
 	var speechRecognition;
-	var lastRoundNr = 0;
+	var lastRoundNr = -1;
 
 	var initSpeechRecognition = function() {
 
-		//speechRecognition = new SpeechRecognition('http://demo.cloudasr.com:80/');
-		speechRecognition = {
-			start: function() {
-			},
-			stop: function() {
-			}
-		};
+		speechRecognition = new SpeechRecognition('http://demo.cloudasr.com:80/');
+		//speechRecognition = {
+		//	start: function() {
+		//	},
+		//	stop: function() {
+		//	}
+		//};
 
 		speechRecognition.onresult = function(result) {
 
+			//noinspection JSUnresolvedVariable
 			if(result.final || result.result.final) {
+				//noinspection JSUnresolvedVariable
 				var alternative = result.alternative || result.result.alternative;
 				var b = '';
 				for(var i = 0, len = alternative.length; i < len; i++) {
+					//noinspection JSUnresolvedVariable
 					b += alternative[i].transcript;
 				}
 				alert(b);
 			}
 		};
 
-		speechRecognition.onstart = function(e) {
+		speechRecognition.onstart = function() {
 			$('.' + recordBtnClass).addClass(recordingClass);
 		};
 
 		speechRecognition.onend = function() {
 			$('.' + recordBtnClass).removeClass(recordingClass);
+			if(lastRoundNr !== roundNr && !err) {
+				lastRoundNr = roundNr;
+				processResult(['xxx aaaaa bb', 'yyyy yyy zzz', 'yyyy', 'fffffff ff', 'aa aaaaaa']);
+			}
+			err = false;
 		};
 
 		var $game = $(gameId);
-		var $err = $('<div></div>');
+		var $err = $('<div>').css({position: 'absolute', left: '30%', bottom: '3.5%'});
 		$game.append($err);
+		var err = false;
 
 		speechRecognition.onerror = function(e) {
-			speechRecognition.stop();
 			$err.html(e);
+			err = true;
 		};
 	};
 
 	var createButtons = function() {
 
 		var $game = $(gameId);
-		var isR = false;
 
 		var $recordBtn = $.app.spriteFactory.createGameButtonSprite(recordBtnClass, $.app.i18n.t.GAME_BUTTON_RECORD, true);
 		$recordBtn.on('click', function() {
-			if(!isR/*speechRecognition.isRecording*/) {
-				isR = true;
+			if(!speechRecognition.isRecording) {
 				speechRecognition.start('cs');
 			}
 			else {
-				isR = false;
 				speechRecognition.stop();
-				if(lastRoundNr !== roundNr) {
-					lastRoundNr = roundNr;
-					processResult(['xxx', 'zzzzzzzzzzzzzzzzzz', 'yyyy', 'fffffff ff'/*, 'aa aaaaaa'*/]);
-				}
 			}
 		});
 
@@ -95,24 +97,48 @@
 	};
 
 	var exit = function() {
+
 		var $game = $(gameId);
-		$game.fadeOut(500);
-		setTimeout(function() {
-			$.app.menu.show();
-			$game.children().not(gameButtonWrapperCls).remove();
-		}, 400);
+
+		var $resultInfo = $('<div>')
+			.addClass(gameInfoClass)
+			.append($('<div>').css('font-size', '200%').html($.app.i18n.t.GAME_INFO_END.format(points)))
+			.append($.app.spriteFactory.createWordSprite('ok', 0.8, true)
+				.addClass(gameWordOptionClass)
+				.css({
+					left: '50%',
+					transform: 'translate(-50%)'
+				})
+				.on('click', function() {
+					$resultInfo.fadeOut(500, function() {
+						$.app.menu.show();
+						$game.hide();
+						$game.find(gameButtonWrapperCls).show();
+						$game.children().not(gameButtonWrapperCls).remove();
+					});
+				}))
+			.hide()
+			.appendTo($game);
+		$resultInfo
+			.css({
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)'
+			});
+
+		$game.children().not($resultInfo).fadeOut(500, function() {
+			$resultInfo.fadeIn(400);
+		});
 	};
 
 	var displayWCenter;
 	var displayHTop;
 	var spriteWOrigin;
 	var spriteHOrigin;
-	var optionHolderH;
-	var optionHolderW;
-	var stackW;
-	var stackH;
 	var stackTop;
 	var roundNr;
+	var points = 0;
+	var lives;
 	var $word;
 	var $info;
 	var $optionHolder;
@@ -127,9 +153,9 @@
 
 			var w = $word.width();
 			var h = $word.height();
-			var sw = stackW * 0.9;
+			var stackH = $wordStack.height();
+			var sw = $wordStack.width() * 0.9;
 			var scale = w > sw ? sw / w : 1;
-			w *= scale;
 			h *= scale;
 
 			$word
@@ -139,10 +165,10 @@
 				}, 300, function() {
 					$word
 						.css({
-							left: stackW / 2 - w / 2,
+							left: '50%',
 							top: -h,
 							opacity: 1,
-							transform: 'scale(' + scale + ')'
+							transform: 'scale(' + scale + ') translate(-50%)'
 						})
 						.appendTo($wordStack)
 						.animate({
@@ -204,11 +230,15 @@
 			});
 		};
 
+		if(!$word) {
+			return;
+		}
+
 		var meanings = $word.meanings;
 		var meaningsLen = meanings.length;
 		var optsLen = possibleResults.length;
 
-		for(var i = 0; i < optsLen; i++) {
+		for(i = 0; i < optsLen; i++) {
 			var r = (possibleResults[i] || '').toLowerCase();
 			for(var j = 0; j < meaningsLen; j++) {
 				if(r.indexOf(meanings[j]) >= 0) {
@@ -218,25 +248,30 @@
 			}
 		}
 
+		if(maxOptionCount === 0) {
+			failCallback();
+			return;
+		}
+
 		var numOptions = Math.min(optsLen, maxOptionCount);
 		var correctResultPos = (Math.random() * (numOptions + 0.99)) >> 0;
 
-		var centerW = optionHolderW / 2;
 		var spriteHMult = 0.5 * (6 / (numOptions + 1));
 		var marginTop = $.app.spriteFactory.getLetterMetrics() * spriteHMult;
-		marginTop = (optionHolderH / (numOptions + 1) - marginTop) >> 0;
+		var optionHolderW = $optionHolder.width();
+		marginTop = ($optionHolder.height() * 0.9 / (numOptions + 1) - marginTop) >> 0;
 
 		var opts = [];
 		var addOpt = function(word, callback) {
 			var $optionSprite = createGameWordSprite(word, spriteHMult, optionHolderW);
-			var left = (centerW - ($optionSprite.width() / 2)) >> 0;
 			$optionSprite
 				.on('click', callback)
 				.addClass(gameWordOptionClass)
 				.css({
 					'margin-top': marginTop,
 					'margin-bottom': marginTop,
-					left: left
+					left: '50%',
+					transform: 'translate(-50%)'
 				})
 				.appendTo($optionHolder);
 			opts.push($optionSprite);
@@ -259,38 +294,50 @@
 
 		roundNr++;
 
-		var $game = $(gameId);
+		$.getJSON('getWord.json', {
+			source_language: sourceLanguage,
+			target_language: targetLanguage
+		}, function(data) {
 
-		var word = 'hello';
-		$word = createGameWordSprite(word, 1.2, $game.width() / 2)
-			.addClass(gameWordClass)
-			.appendTo($game);
-		$word.sourceText = word;
-		$word.meanings = ['ahoj', 'cau', 'nazdar'];
+			var $game = $(gameId);
 
-		var w = $word.width();
-		var h = $word.height();
+			var word = data.text;
+			var meanings = data.meanings;
+			for(var i = 0, len = meanings.length; i < len; i++) {
+				meanings[i] = meanings[i].text;
+			}
 
-		$word
-			.css({
-				left: spriteWOrigin,
-				top: spriteHOrigin - h,
-				opacity: 0.3,
-				transform: 'scale(0.3)'
-			})
-			.animate({
-				opacity: 1,
-				left: displayWCenter - (w / 2),
-				top: displayHTop,
-				transform: 'scale(1)'
-			}, {
-				duration: 600,
-				complete: function() {
-					$info.fadeIn(300);
-				}
-			});
+			$word = createGameWordSprite(word, 1.2, $game.width() / 2)
+				.addClass(gameWordClass)
+				.appendTo($game);
+			$word.sourceText = word;
+			$word.meanings = meanings;
 
-		$optionHolder.children().not('.' + gameInfoClass).remove();
+			var w = $word.width();
+			var h = $word.height();
+
+			//noinspection JSUnusedGlobalSymbols
+			$word
+				.css({
+					left: spriteWOrigin,
+					top: spriteHOrigin - h,
+					opacity: 0.3,
+					transform: 'scale(0.3)'
+				})
+				.animate({
+					opacity: 1,
+					left: displayWCenter - (w / 2),
+					top: displayHTop,
+					transform: 'scale(1)'
+				}, {
+					duration: 400,
+					complete: function() {
+						$info.fadeIn(300);
+					}
+				});
+
+			$optionHolder.children().not('.' + gameInfoClass).remove();
+		});
 	};
 
 	var sourceLanguage;
@@ -301,7 +348,7 @@
 
 		sourceLanguage = sourceLang || $.app.i18n.locale.en;
 		targetLanguage = targetLang || $.app.i18n.locale.cs;
-		maxOptionCount = maxOptCount || 6;
+		maxOptionCount = (maxOptCount || 6) - 1;
 
 		var $game = $(gameId);
 		$game.show();
@@ -325,16 +372,11 @@
 			.hide()
 			.appendTo($game);
 
-		optionHolderH = $optionHolder.height() * 0.9;
-		optionHolderW = $optionHolder.width();
-
 		$wordStack = $('<div>')
 			.addClass(gameWordStackClass)
 			.appendTo($game);
 
-		stackW = $wordStack.width();
-		stackH = $wordStack.height();
-		stackTop = stackH;
+		stackTop = $wordStack.height();
 
 		roundNr = lastRoundNr = 0;
 
@@ -350,7 +392,7 @@
 
 		var $banner = $(bannerId);
 		var offset = $banner.offset();
-		spriteWOrigin = offset.left + $banner.width() / 4;
+		spriteWOrigin = offset.left + $banner.width() / 2;
 		spriteHOrigin = offset.top + $banner.height() * 0.75;
 	};
 

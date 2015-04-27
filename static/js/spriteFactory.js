@@ -11,7 +11,7 @@
 	var letterSize;
 
 	var optionsItemTemplateId = 'tpl_optionsItem';
-	var optionsLetterSizeMultiplier = 0.7;
+	var optionsLetterSizeMultiplier = 0.6;
 	var optionsArrowHeight;
 	var optionsArrowWidth;
 

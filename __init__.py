@@ -1,22 +1,22 @@
 __author__ = 'Janek Milota'
 
-from flask import Flask, render_template
+from flask import Flask
 from flask.ext.assets import Environment
 
-import configuration
-import assets
+from assets import bundles
+from controller import mod
+from configuration import app_config, view_config
+import dao
 
 
 app = Flask(__name__)
-app.config.from_object(configuration)
 
-Environment(app).register(assets.bundles)
+app.config.from_object(app_config)
+app.register_blueprint(mod)
 
+Environment(app).register(bundles)
 
-@app.route('/')
-def home():
-	return render_template('index.html', host=configuration.host, appId=configuration.appId)
-
+dao.init_db()
 
 if __name__ == '__main__':
-	app.run(host=configuration.host, port=configuration.port)
+	app.run(host=view_config.host, port=view_config.port)
