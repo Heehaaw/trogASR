@@ -36,8 +36,14 @@
 			$menuItems.removeClass(activeCls).removeClass(blurCls);
 			$clicked = null;
 			var lang = $.app.options.getCurrentLanguage();
-			var maxOpts = $.app.options.getCurrentSuggestions();
-			$.app.game.start(lang.source, lang.target, maxOpts.id);
+			$.app.game.start(
+				lang.source,
+				lang.target,
+				$.app.options.getCurrentSuggestions().val,
+				$.app.options.getCurrentLives().val,
+				$.app.options.getCurrentRoundTime().val,
+				$.app.options.getCurrentGameTime().val
+			);
 		}));
 
 		$menu.append(createItem($.app.i18n.t.MENU_OPTIONS, function() {

@@ -92,7 +92,7 @@
 		}
 		var size = (sizeMultiplier ? letterSize * sizeMultiplier : letterSize) >> 0;
 		return $.app.templates.process(wordTemplateId, {
-			width: size * (len - spaceCount / 2) + 1,
+			width: size * (len - spaceCount / 2),
 			height: size,
 			content: htmlBuffer
 		}, as$);

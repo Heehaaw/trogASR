@@ -13,12 +13,17 @@
 	var recordingClass = 'recording';
 	var gameWordClass = 'gameWord';
 	var gameInfoClass = 'gameInfo';
+	var gameResultInfoClass = 'gameResultInfo';
 	var gameWordOptionClass = 'gameWordOption';
 	var gameOptionHolderClass = 'gameOptionHolder';
 	var gameWordStackClass = 'gameWordStack';
+	var gameStatsClass = 'gameStats';
+	var livesClass = 'lives';
+	var gameTimeClass = 'gameTime';
+	var roundTimeClass = 'roundTime';
 
 	var speechRecognition;
-	var lastRoundNr = -1;
+	var lastRoundNr;
 
 	var initSpeechRecognition = function() {
 
@@ -98,27 +103,34 @@
 
 	var exit = function() {
 
+		if(gameTimeHandle) {
+			clearInterval(gameTimeHandle);
+		}
+		if(roundTimeHandle) {
+			clearInterval(roundTimeHandle);
+		}
+
 		var $game = $(gameId);
 
 		var $resultInfo = $('<div>')
-			.addClass(gameInfoClass)
-			.append($('<div>').css('font-size', '200%').html($.app.i18n.t.GAME_INFO_END.format(points)))
-			.append($.app.spriteFactory.createWordSprite('ok', 0.8, true)
+			.addClass(gameResultInfoClass)
+			.append($('<div>').html($.app.i18n.t.GAME_INFO_END.format(points)))
+			.append($.app.spriteFactory.createWordSprite('ok', 1, true)
 				.addClass(gameWordOptionClass)
 				.css({
 					left: '50%',
 					transform: 'translate(-50%)'
 				})
 				.on('click', function() {
-					$resultInfo.fadeOut(500, function() {
+					$resultInfo.fadeOut(400, function() {
 						$.app.menu.show();
-						$game.hide();
-						$game.find(gameButtonWrapperCls).show();
+						//noinspection JSValidateTypes
 						$game.children().not(gameButtonWrapperCls).remove();
+						$resultInfo.remove();
 					});
 				}))
 			.hide()
-			.appendTo($game);
+			.appendTo('#body');
 		$resultInfo
 			.css({
 				top: '50%',
@@ -126,8 +138,8 @@
 				transform: 'translate(-50%, -50%)'
 			});
 
-		$game.children().not($resultInfo).fadeOut(500, function() {
-			$resultInfo.fadeIn(400);
+		$game.fadeOut(400, function() {
+			$resultInfo.fadeIn(300);
 		});
 	};
 
@@ -137,98 +149,112 @@
 	var spriteHOrigin;
 	var stackTop;
 	var roundNr;
-	var points = 0;
-	var lives;
+	var points;
 	var $word;
 	var $info;
 	var $optionHolder;
 	var $wordStack;
+	var $lives;
+
+	var successRound = function() {
+
+		points++;
+
+		$info.fadeOut(100);
+		$optionHolder.fadeOut(300);
+
+		var w = $word.width();
+		var h = $word.height();
+		var stackH = $wordStack.height();
+		var sw = $wordStack.width() * 0.9;
+		var scale = w > sw ? sw / w : 1;
+		h *= scale;
+
+		$word
+			.animate({
+				top: -displayHTop / 2,
+				opacity: 0
+			}, 300, function() {
+				$word
+					.css({
+						left: '50%',
+						top: -h,
+						opacity: 1,
+						transform: 'scale(' + scale + ') translate(-50%)'
+					})
+					.appendTo($wordStack)
+					.animate({
+						top: stackTop -= h
+					}, 300, function() {
+						if(stackTop < stackH * 0.25) {
+							var offset = stackTop - (stackTop += stackH * 0.5);
+							$wordStack.children().animate({
+								top: '-=' + offset
+							}, 300, function() {
+								var $me = $(this);
+								if($me.position().top > stackH) {
+									$me.remove();
+								}
+							});
+						}
+						newRound();
+					});
+			});
+	};
+
+	var failRound = function() {
+
+		if(!$word) {
+			return;
+		}
+
+		$info.fadeOut(100);
+		$optionHolder.fadeOut(300);
+
+		var w = $word.width();
+		var h = $word.height();
+		var angle = 0;
+		var startX = w / 2;
+		var startY = h / 2;
+		var particleCount = 13;
+		var angleDelta = Math.PI * 2 / particleCount;
+		var particleSize = $.app.spriteFactory.getLetterMetrics() * 0.5;
+
+		for(var i = 0; i < particleCount; i++) {
+			$('<div/>')
+				.addClass(bubbleDebrisClass)
+				.css({
+					left: startX,
+					top: startY,
+					width: particleSize,
+					height: particleSize
+				})
+				.appendTo($word)
+				.animate({
+					left: startX + Math.cos(angle) * (w / 3 + Math.random() * w / 4),
+					top: startY + Math.sin(angle) * (h + Math.random() * h * 1.5),
+					width: particleSize / 10,
+					height: particleSize / 10,
+					opacity: 0
+				}, 500);
+			angle += angleDelta;
+		}
+
+		$word.fadeOut(550, function() {
+			$word.remove();
+			if(lives) {
+				lives--;
+				$lives.text(lives);
+				if(lives <= 0) {
+					exit();
+					return;
+				}
+			}
+			newRound();
+		});
+	};
 
 	var processResult = function(possibleResults) {
-
-		var successCallback = function() {
-
-			$info.fadeOut(100);
-			$optionHolder.fadeOut(300);
-
-			var w = $word.width();
-			var h = $word.height();
-			var stackH = $wordStack.height();
-			var sw = $wordStack.width() * 0.9;
-			var scale = w > sw ? sw / w : 1;
-			h *= scale;
-
-			$word
-				.animate({
-					top: -displayHTop / 2,
-					opacity: 0
-				}, 300, function() {
-					$word
-						.css({
-							left: '50%',
-							top: -h,
-							opacity: 1,
-							transform: 'scale(' + scale + ') translate(-50%)'
-						})
-						.appendTo($wordStack)
-						.animate({
-							top: stackTop -= h
-						}, 300, function() {
-							if(stackTop < stackH * 0.25) {
-								var offset = stackTop - (stackTop += stackH * 0.5);
-								$wordStack.children().animate({
-									top: '-=' + offset
-								}, 300, function() {
-									var $me = $(this);
-									if($me.position().top > stackH) {
-										$me.remove();
-									}
-								});
-							}
-							newRound();
-						});
-				});
-		};
-
-		var failCallback = function() {
-
-			$info.fadeOut(100);
-			$optionHolder.fadeOut(300);
-
-			var w = $word.width();
-			var h = $word.height();
-			var angle = 0;
-			var startX = w / 2;
-			var startY = h / 2;
-			var particleCount = 13;
-			var angleDelta = Math.PI * 2 / particleCount;
-			var particleSize = $.app.spriteFactory.getLetterMetrics() * 0.5;
-
-			for(i = 0; i < particleCount; i++) {
-				$('<div/>')
-					.addClass(bubbleDebrisClass)
-					.css({
-						left: startX,
-						top: startY,
-						width: particleSize,
-						height: particleSize
-					})
-					.appendTo($word)
-					.animate({
-						left: startX + Math.cos(angle) * (w / 3 + Math.random() * w / 4),
-						top: startY + Math.sin(angle) * (h + Math.random() * h * 1.5),
-						width: particleSize / 10,
-						height: particleSize / 10,
-						opacity: 0
-					}, 500);
-				angle += angleDelta;
-			}
-
-			$word.fadeOut(550, function() {
-				$word.remove();
-				newRound();
-			});
-		};
 
 		if(!$word) {
 			return;
@@ -242,14 +268,14 @@
 			var r = (possibleResults[i] || '').toLowerCase();
 			for(var j = 0; j < meaningsLen; j++) {
 				if(r.indexOf(meanings[j]) >= 0) {
-					successCallback();
+					successRound();
 					return;
 				}
 			}
 		}
 
-		if(maxOptionCount === 0) {
-			failCallback();
+		if(!maxOptionCount) {
+			failRound();
 			return;
 		}
 
@@ -279,12 +305,12 @@
 
 		for(var i = 0; i < numOptions; i++) {
 			if(i === correctResultPos) {
-				addOpt(meanings[(Math.random() * (meaningsLen - 0.01)) >> 0], successCallback);
+				addOpt(meanings[(Math.random() * (meaningsLen - 0.01)) >> 0], successRound);
 			}
-			addOpt(possibleResults[i], failCallback);
+			addOpt(possibleResults[i], failRound);
 		}
 		if(numOptions === correctResultPos) {
-			addOpt(meanings[(Math.random() * (meaningsLen - 0.01)) >> 0], successCallback);
+			addOpt(meanings[(Math.random() * (meaningsLen - 0.01)) >> 0], successRound);
 		}
 
 		$optionHolder.append(opts).fadeIn(300);
@@ -293,6 +319,9 @@
 	var newRound = function() {
 
 		roundNr++;
+		if(roundTimeHandle) {
+			clearInterval(roundTimeHandle);
+		}
 
 		$.getJSON('getWord.json', {
 			source_language: sourceLanguage,
@@ -300,7 +329,6 @@
 		}, function(data) {
 
 			var $game = $(gameId);
-
 			var word = data.text;
 			var meanings = data.meanings;
 			for(var i = 0, len = meanings.length; i < len; i++) {
@@ -311,10 +339,12 @@
 				.addClass(gameWordClass)
 				.appendTo($game);
 			$word.sourceText = word;
-			$word.meanings = meanings;
 
+			$word.meanings = meanings;
 			var w = $word.width();
+
 			var h = $word.height();
+			roundTimeHandle = roundTime ? createTimeDisplayHandle($roundTime, roundTime, failRound) : null;
 
 			//noinspection JSUnusedGlobalSymbols
 			$word
@@ -343,12 +373,36 @@
 	var sourceLanguage;
 	var targetLanguage;
 	var maxOptionCount;
+	var lives;
+	var roundTime;
+	var gameTimeHandle;
+	var roundTimeHandle;
+	var $gameStats;
+	var $roundTime;
 
-	var start = function(sourceLang, targetLang, maxOptCount) {
+	var createTimeDisplayHandle = function($el, time, callback) {
+		var t = time;
+		var handle = setInterval(function() {
+			if(t <= 0) {
+				clearInterval(handle);
+				callback();
+			}
+			var val = (t % 60) >> 0;
+			var s = val < 10 ? '0' + val : val;
+			val = ((t / 60) % 60) >> 0;
+			$el.text((val < 10 ? '0' + val : val) + ':' + s);
+			t--;
+		}, 1000);
+		return handle;
+	};
+
+	var start = function(sourceLang, targetLang, maxOptCount, _lives, _roundTime, gameTime) {
 
 		sourceLanguage = sourceLang || $.app.i18n.locale.en;
 		targetLanguage = targetLang || $.app.i18n.locale.cs;
-		maxOptionCount = (maxOptCount || 6) - 1;
+		maxOptionCount = maxOptCount ? maxOptCount - 1 : null;
+		lives = _lives;
+		roundTime = _roundTime;
 
 		var $game = $(gameId);
 		$game.show();
@@ -378,8 +432,24 @@
 
 		stackTop = $wordStack.height();
 
-		roundNr = lastRoundNr = 0;
+		$gameStats = $('<div>')
+			.addClass(gameStatsClass)
+			.appendTo($game);
 
+		if(lives) {
+			$lives = $('<div>')
+				.addClass(livesClass)
+				.text(lives)
+				.appendTo($gameStats);
+		}
+
+		gameTimeHandle = gameTime ? createTimeDisplayHandle($('<div>').addClass(gameTimeClass).appendTo($gameStats), gameTime, exit) : null;
+
+		if(roundTime) {
+			$roundTime = $('<div>').addClass(roundTimeClass).appendTo($gameStats);
+		}
+
+		points = roundNr = lastRoundNr = 0;
 		$.app.loader.delayedHide(1000);
 		setTimeout(newRound, 2000);
 	};

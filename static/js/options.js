@@ -5,7 +5,8 @@
 (function($) {
 
 	var optionsId = '#options';
-	var optionsValueCls = '.optionsItem';
+	var optionsItemCls = '.optionsItem';
+	var optionsValueCls = '.optionsValue';
 	var optionsLeftCls = '.optionsLeft';
 	var optionsRightCls = '.optionsRight';
 	var showCls = 'show';
@@ -28,100 +29,122 @@
 	var lives = {
 		1: {
 			id: 1,
-			getText: $.app.i18n.keys.OPTIONS_LIVES_1.getText
+			getText: $.app.i18n.keys.OPTIONS_LIVES_1.getText,
+			val: 1
 		},
 		3: {
 			id: 3,
-			getText: $.app.i18n.keys.OPTIONS_LIVES_3.getText
+			getText: $.app.i18n.keys.OPTIONS_LIVES_3.getText,
+			val: 3
 		},
 		5: {
 			id: 5,
-			getText: $.app.i18n.keys.OPTIONS_LIVES_5.getText
+			getText: $.app.i18n.keys.OPTIONS_LIVES_5.getText,
+			val: 5
 		},
 		10: {
 			id: 10,
-			getText: $.app.i18n.keys.OPTIONS_LIVES_10.getText
+			getText: $.app.i18n.keys.OPTIONS_LIVES_10.getText,
+			val: 10
 		},
 		OFF: {
 			id: 'OFF',
-			getText: $.app.i18n.keys.OPTIONS_OFF.getText
+			getText: $.app.i18n.keys.OPTIONS_OFF.getText,
+			val: null
 		}
 	};
 
 	var suggestions = {
 		2: {
 			id: 2,
-			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_2.getText
+			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_2.getText,
+			val: 2
 		},
 		3: {
 			id: 3,
-			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_3.getText
+			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_3.getText,
+			val: 3
 		},
 		4: {
 			id: 4,
-			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_4.getText
+			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_4.getText,
+			val: 4
 		},
 		5: {
 			id: 5,
-			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_5.getText
+			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_5.getText,
+			val: 5
 		},
 		6: {
 			id: 6,
-			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_6.getText
+			getText: $.app.i18n.keys.OPTIONS_SUGGESTIONS_6.getText,
+			val: 6
 		},
 		OFF: {
 			id: 'OFF',
-			getText: $.app.i18n.keys.OPTIONS_OFF.getText
+			getText: $.app.i18n.keys.OPTIONS_OFF.getText,
+			val: null
 		}
 	};
 
 	var roundTime = {
 		10: {
 			id: 10,
-			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_10.getText
+			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_10.getText,
+			val: 10
 		},
 		15: {
 			id: 15,
-			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_15.getText
+			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_15.getText,
+			val: 15
 		},
 		30: {
 			id: 30,
-			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_30.getText
+			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_30.getText,
+			val: 30
 		},
 		60: {
 			id: 60,
-			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_60.getText
+			getText: $.app.i18n.keys.OPTIONS_ROUND_TIME_60.getText,
+			val: 60
 		},
 		OFF: {
 			id: 'OFF',
-			getText: $.app.i18n.keys.OPTIONS_OFF.getText
+			getText: $.app.i18n.keys.OPTIONS_OFF.getText,
+			val: null
 		}
 	};
 
 	var gameTime = {
 		30: {
 			id: 30,
-			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_30.getText
+			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_30.getText,
+			val: 30
 		},
 		60: {
 			id: 60,
-			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_60.getText
+			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_60.getText,
+			val: 60
 		},
 		120: {
 			id: 120,
-			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_120.getText
+			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_120.getText,
+			val: 120
 		},
 		300: {
 			id: 300,
-			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_300.getText
+			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_300.getText,
+			val: 300
 		},
 		600: {
 			id: 600,
-			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_600.getText
+			getText: $.app.i18n.keys.OPTIONS_GAME_TIME_600.getText,
+			val: 600
 		},
 		OFF: {
 			id: 'OFF',
-			getText: $.app.i18n.keys.OPTIONS_OFF.getText
+			getText: $.app.i18n.keys.OPTIONS_OFF.getText,
+			val: null
 		}
 	};
 
@@ -139,20 +162,26 @@
 
 		var $item = $.app.spriteFactory.createOptionsItemSprite(label, true);
 
-		$item.find(optionsValueCls).text(ord[index].getText());
+		var $ov = $item.find(optionsValueCls).text(ord[index].getText());
 
 		$item.find(optionsLeftCls).on('click', function() {
 			if(--index < 0) {
 				index = len - 1;
 			}
-			$item.find(optionsValueCls).text(ord[index].getText());
+			$ov.fadeOut(100, function() {
+				$ov.text(ord[index].getText());
+				$ov.fadeIn(100);
+			})
 		});
 
 		$item.find(optionsRightCls).on('click', function() {
 			if(++index >= len) {
 				index = 0;
 			}
-			$item.find(optionsValueCls).text(ord[index].getText());
+			$ov.fadeOut(100, function() {
+				$ov.text(ord[index].getText());
+				$ov.fadeIn(100);
+			})
 		});
 
 		$item.getCurrent = function() {
