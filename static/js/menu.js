@@ -32,6 +32,7 @@
 		$menu.append(createItem($.app.i18n.t.MENU_PLAY, function() {
 			$.app.loader.show();
 			$.app.options.hide();
+			$.app.leaderboards.hide();
 			hide();
 			$menuItems.removeClass(activeCls).removeClass(blurCls);
 			$clicked = null;
@@ -47,11 +48,16 @@
 		}));
 
 		$menu.append(createItem($.app.i18n.t.MENU_OPTIONS, function() {
+			$.app.leaderboards.hide();
 			$.app.options.show();
 			show();
 		}));
 
-		$menu.append(createItem($.app.i18n.t.MENU_LEADER_BOARDS));
+		$menu.append(createItem($.app.i18n.t.MENU_LEADER_BOARDS, function() {
+			$.app.options.hide();
+			$.app.leaderboards.show();
+			show();
+		}));
 
 		// We have to add the items first so they acquire context
 		var $menuItems = $menu.find('.menuItem');

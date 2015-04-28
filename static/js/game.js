@@ -21,9 +21,15 @@
 	var livesClass = 'lives';
 	var gameTimeClass = 'gameTime';
 	var roundTimeClass = 'roundTime';
+	var gearLoaderClass = 'gearLoader';
 
 	var speechRecognition;
 	var lastRoundNr;
+
+	var recognitionModelMap = {
+		cs: 'cs',
+		en: 'en-voxforge'
+	};
 
 	var initSpeechRecognition = function() {
 
@@ -57,6 +63,7 @@
 		speechRecognition.onend = function() {
 			$('.' + recordBtnClass).removeClass(recordingClass);
 			if(lastRoundNr !== roundNr && !err) {
+				$gear.fadeIn(100);
 				lastRoundNr = roundNr;
 				processResult(['xxx aaaaa bb', 'yyyy yyy zzz', 'yyyy', 'fffffff ff', 'aa aaaaaa']);
 			}
@@ -74,26 +81,31 @@
 		};
 	};
 
+	var $gear;
+
 	var createButtons = function() {
 
 		var $game = $(gameId);
 
-		var $recordBtn = $.app.spriteFactory.createGameButtonSprite(recordBtnClass, $.app.i18n.t.GAME_BUTTON_RECORD, true);
-		$recordBtn.on('click', function() {
-			if(!speechRecognition.isRecording) {
-				speechRecognition.start('cs');
-			}
-			else {
-				speechRecognition.stop();
-			}
-		});
+		$.app.spriteFactory.createGameButtonSprite(recordBtnClass, $.app.i18n.t.GAME_BUTTON_RECORD, true)
+			.on('click', function() {
+				if(!speechRecognition.isRecording) {
+					speechRecognition.start(recognitionModelMap[targetLanguage]);
+				}
+				else {
+					speechRecognition.stop();
+				}
+			})
+			.appendTo($game);
 
-		$game.append($recordBtn);
+		$.app.spriteFactory.createGameButtonSprite(exitBtnClass, $.app.i18n.t.GAME_BUTTON_EXIT, true)
+			.on('click', exit)
+			.appendTo($game);
 
-		var $exitBtn = $.app.spriteFactory.createGameButtonSprite(exitBtnClass, $.app.i18n.t.GAME_BUTTON_EXIT, true);
-		$exitBtn.on('click', exit);
-
-		$game.append($exitBtn);
+		$gear = $('<div>')
+			.addClass(gearLoaderClass)
+			.hide()
+			.appendTo($game);
 	};
 
 	var createGameWordSprite = function(word, sizeMult, maxWidth) {
@@ -125,7 +137,7 @@
 					$resultInfo.fadeOut(400, function() {
 						$.app.menu.show();
 						//noinspection JSValidateTypes
-						$game.children().not(gameButtonWrapperCls).remove();
+						$game.children().not(gameButtonWrapperCls).not('.' + gearLoaderClass).remove();
 						$resultInfo.remove();
 					});
 				}))
@@ -268,6 +280,7 @@
 			var r = (possibleResults[i] || '').toLowerCase();
 			for(var j = 0; j < meaningsLen; j++) {
 				if(r.indexOf(meanings[j]) >= 0) {
+					$gear.fadeOut(100);
 					successRound();
 					return;
 				}
@@ -313,7 +326,9 @@
 			addOpt(meanings[(Math.random() * (meaningsLen - 0.01)) >> 0], successRound);
 		}
 
-		$optionHolder.append(opts).fadeIn(300);
+		$gear.fadeOut(100, function() {
+			$optionHolder.append(opts).fadeIn(300);
+		});
 	};
 
 	var newRound = function() {

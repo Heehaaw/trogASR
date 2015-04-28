@@ -49,6 +49,8 @@
 		$(fbHolderId).append(htmlBuffer);
 	};
 
+	var currentUserName = null;
+
 	var initComponent = function() {
 
 		createWidgets();
@@ -69,13 +71,14 @@
 				if($userInfoItem) {
 					$userInfoItem.remove();
 					$userInfoItem = null;
+					currentUserName = null;
 				}
 
 				if(response.status === 'connected') {
 					FB.api('/me?fields=name,picture', function(response) {
 						$userInfoItem = $.app.templates.process(userInfoItemTemplateId, {
 							imageUrl: response.picture.data.url,
-							userName: response.name
+							userName: currentUserName = response.name
 						}, true);
 						$(fbHolderId).prepend($userInfoItem);
 					});
@@ -97,7 +100,10 @@
 
 	var me = {
 		initComponent: initComponent,
-		reset: reset
+		reset: reset,
+		getCurrentUserName: function() {
+			return currentUserName;
+		}
 	};
 
 	$.app.fb = $.app.registerComponent(me);

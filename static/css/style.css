@@ -169,14 +169,13 @@ footer {
 
 #menu {
     width: 40%;
-    float: left;
-    position: relative;
+    position: absolute;
     left: 0;
     border-radius: 0 70% 20% 20%;
     transition: left 0.5s ease-in-out;
 }
 
-#menu, #options {
+#menu, #options, #leaderboards {
     background-color: rgba(0, 0, 0, 0.5);
     box-shadow: 0.6vw 1.5vw 2.1vw 1vw rgba(0, 0, 0, 0.4);
     padding-top: 5%;
@@ -226,14 +225,14 @@ footer {
 }
 
 #options {
-    height: 0;
+    height: 93%;
     width: 57%;
-    float: right;
-    position: relative;
-    right: -58%;
+    position: absolute;
+    right: -5%;
     border-radius: 45% 0 20% 20%;
-    transition: right 0.5s ease-in-out, height 0.5s ease-in-out;
-    transform-origin: 0% 15%;
+    transform: scale(0);
+    transition: right 0.5s ease-in-out, height 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform-origin: 100% 0%;
     display: table;
 }
 
@@ -247,7 +246,7 @@ footer {
 
 #options.show {
     right: 0;
-    height: 93%
+    transform: scale(1);
 }
 
 #options .optionsItem-wrapper {
@@ -292,6 +291,129 @@ footer {
     text-align: center;
     background: rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 0 0.07vw rgba(255, 255, 255, 1), 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+}
+
+#leaderboards {
+    height: 93%;
+    width: 57%;
+    position: absolute;
+    right: -5%;
+    bottom: 1.6%;
+    border-radius: 45% 20% 0 20%;
+    transform: scale(0);
+    transition: right 0.5s ease-in-out, height 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform-origin: 100% 100%;
+    display: table;
+    overflow: hidden;
+}
+
+#leaderboards:before, #leaderboards:after {
+    content: "";
+}
+
+#leaderboards:after {
+    clear: both;
+}
+
+#leaderboards.show {
+    right: 0;
+    transform: scale(1);
+}
+
+#leaderboards .leaderboardsContainer {
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+
+#leaderboards .leaderboardsRow {
+    width: 100%;
+    clear: both;
+    float: left;
+    position: relative;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    vertical-align: middle;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsLeft, #leaderboards .leaderboardsRow .leaderboardsRight {
+    width: 48%;
+    position: relative;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsRight {
+    float: left;
+    padding-left: 2%;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsLeft {
+    text-align: right;
+    float: left;
+    padding-right: 2%;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsName {
+    padding: 1% 1.5%;
+    background: rgba(26, 27, 33, 0.6);
+    box-shadow: 0 0 0 0.07vw rgba(255, 255, 255, 0.5), 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+    font-size: 200%;
+    color: white;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsPoints {
+    overflow: hidden;
+    display: block;
+    padding: 1% 1.5%;
+    box-shadow: 0 0 0 0.07vw rgba(255, 255, 255, 0.5), 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
+    width: 20%;
+    height: 100%;
+    font-size: 200%;
+    color: white;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsLeft .leaderboardsPoints {
+    float: right;
+    margin-right: 5%;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsLeft .leaderboardsPoints:after {
+    clear: both;
+    content: "";
+    position: absolute;
+    top: 43%;
+    left: 90.5%;
+    width: 0;
+    height: 0;
+    border-width: 0.3vw 3.8vw 0.3vw 0;
+    border-color: transparent rgba(164, 166, 181, 0.8) transparent transparent;
+    border-style: solid;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsRight .leaderboardsPoints {
+    float: left;
+    margin-left: 5%;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsRight .leaderboardsPoints:before {
+    clear: both;
+    content: "";
+    position: absolute;
+    top: 43%;
+    right: 91%;
+    width: 0;
+    height: 0;
+    border-width: 0.3vw 0 0.3vw 3.8vw;
+    border-color: transparent transparent transparent rgba(164, 166, 181, 0.8);
+    border-style: solid;
+}
+
+#leaderboards .leaderboardsRow .leaderboardsLeft .leaderboardsName {
+    border-right: 0.5vw solid rgba(164, 166, 181, 0.8);
+}
+
+#leaderboards .leaderboardsRow .leaderboardsRight .leaderboardsName {
+    border-left: 0.5vw solid rgba(164, 166, 181, 0.8);
 }
 
 .userInfoItem-wrapper {
@@ -477,4 +599,15 @@ footer {
 
 #game .roundTime:before {
     background: url('../img/arrow-around.png') no-repeat left center;
+}
+
+.gearLoader {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url('../img/gear.gif') no-repeat center top;
+    background-size: contain;
 }

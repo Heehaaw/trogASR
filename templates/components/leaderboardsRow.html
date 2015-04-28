@@ -1,0 +1,18 @@
+<script type="text/html" id="tpl_leaderboardsRow">
+    <div id="<%=id%>" class="leaderboardsRow">
+        <div class="leaderboardsLeft">
+            <% if(leftPoints) { %>
+            <div class="leaderboardsPoints"><%=points%></div>
+            <% } else { %>
+            <div class="leaderboardsName"><%=name%></div>
+            <% } %>
+        </div>
+        <div class="leaderboardsRight">
+            <% if(!leftPoints) { %>
+            <div class="leaderboardsPoints"><%=points%></div>
+            <% } else { %>
+            <div class="leaderboardsName"><%=name%></div>
+            <% } %>
+        </div>
+    </div>
+</script>
