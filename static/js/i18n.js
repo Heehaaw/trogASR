@@ -1,16 +1,32 @@
+/*
+ * Copyright 2015 Jan Milota
+ * Licensed under the Apache License, Version 2.0 (see the "LICENSE");
+ */
 /**
+ * Creates and registers the internationalization component
+ *
  * Author: Janek Milota
  * Date: 12.01.2015
  */
-(function($) {
+(function($, ns) {
 
+	/**
+	 * Supported locales
+	 * @enum {string}
+	 */
 	var locale = {
 		cs: 'cs',
 		en: 'en'
 	};
 
+	// Current locale cached value
 	var currentLocale = '';
 
+	/**
+	 * Localization keys.
+	 * Every key has to have string meaning for every supported locale
+	 * @enum {{?: string}}
+	 */
 	var keys = {
 		MENU_PLAY: {
 			cs: 'Hrát',
@@ -158,6 +174,7 @@
 		}
 	};
 
+	// Add a dynamic getText() method to every key
 	for(var keyName in keys) {
 		var key = keys[keyName];
 		key.getText = $.proxy(function(loc) {
@@ -165,29 +182,50 @@
 		}, key);
 	}
 
+	/**
+	 * Initializes the component
+	 */
 	var initComponent = function() {
-		setLocale($.app.readCookie('locale') || locale.en);
+		setLocale(APP.readCookie('locale') || locale.en);
 	};
 
+	/**
+	 * Gets localized text for the given key in the given locale
+	 * @param {string} key localization key
+	 * @param {string} locale locale
+	 * @returns {string} localized text
+	 */
 	var getText = function(key, locale) {
 		return key ? (keys[key] || {})[locale || currentLocale] : undefined;
 	};
 
+	/**
+	 * Gets the current locale
+	 * @returns {string} current locale
+	 */
 	var getLocale = function() {
 		return currentLocale;
 	};
 
+	// A cache object used for storing static localization mappings
 	var localeCache = {};
 
+	/**
+	 * Sets a locale
+	 * @param {string} loc locale to be set
+	 */
 	var setLocale = function(loc) {
 
 		if(!loc || typeof(loc) != 'string' || !locale[loc]) {
+			// The provided locale is not valid or among the supported ones
 			throw 'A valid locale has to be provided!';
 		}
 
-		$.app.createCookie('locale', loc, 7);
+		// Store the locale to a cookie and cache it
+		APP.createCookie('locale', loc, 7);
 		currentLocale = loc;
 
+		// Create a static localized text access object
 		var localeVal = localeCache[loc];
 		if(!localeVal) {
 			localeVal = {};
@@ -197,10 +235,11 @@
 			localeCache[loc] = localeVal;
 		}
 
-		me.t = localeVal
+		i18n.t = localeVal
 	};
 
-	var me = {
+	// Assemble the component
+	var i18n = {
 		initComponent: initComponent,
 		reset: function() {
 		},
@@ -212,6 +251,11 @@
 		getText: getText
 	};
 
-	$.app.i18n = $.app.registerComponent(me);
+	/**
+	 * The internationalization component
+	 * @namespace
+	 * @alias APP.I18N
+	 */
+	ns.I18N = ns.registerComponent(i18n);
 
-})(jQuery);
+})(jQuery, APP);

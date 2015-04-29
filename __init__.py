@@ -1,3 +1,6 @@
+# Copyright 2015 Jan Milota
+# Licensed under the Apache License, Version 2.0 (see the "LICENSE");
+
 __author__ = 'Janek Milota'
 
 from flask import Flask

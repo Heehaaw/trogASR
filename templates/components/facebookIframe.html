@@ -1,9 +1,13 @@
+{#
+Copyright 2015 Jan Milota
+Licensed under the Apache License, Version 2.0 (see the "LICENSE");
+#}
 <script type="text/html" id="tpl_fbIframe">
-  <iframe id="<%=id%>"
-          frameborder="0"
-          allowtransparency="true"
-          scrolling="no"
-          src="https://www.facebook.com/plugins/<%=widgetType%>.php?app_id=<%=appId%>&amp;locale=<%=locale%><% for(var name in urlParams){ %>&amp;<%=name%>=<%=urlParams[name]%><% } %>"
-          class="fbIframe"
-          style="<% for (var name in styles){ %><%=name%>:<%=styles[name]%>; <% } %>"></iframe>
+    <iframe id="<%=id%>"
+            frameborder="0"
+            allowtransparency="true"
+            scrolling="no"
+            src="https://www.facebook.com/plugins/<%=widgetType%>.php?app_id=<%=appId%>&amp;locale=<%=locale%><% for(var name in urlParams){ %>&amp;<%=name%>=<%=urlParams[name]%><% } %>"
+            class="fbIframe"
+            style="<% for (var name in styles){ %><%=name%>:<%=styles[name]%>; <% } %>"></iframe>
 </script>

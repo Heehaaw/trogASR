@@ -1,7 +1,11 @@
+{#
+Copyright 2015 Jan Milota
+Licensed under the Apache License, Version 2.0 (see the "LICENSE");
+#}
 <script type="text/html" id="tpl_fbWidget">
     <div id="<%=id%>" class="<%=widgetType%>"
-      <% for(var name in data) { %>
-        data-<%=name%>="<%=data[name]%>"
-      <% } %> >
+    <% for(var name in data) { %>
+    data-<%=name%>="<%=data[name]%>"
+    <% } %> >
     </div>
 </script>
