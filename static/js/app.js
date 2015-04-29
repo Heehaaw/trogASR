@@ -9,7 +9,7 @@
  * Date: 9.01.2015
  * @namespace
  */
-var APP = APP || {};
+APP = APP || {};
 
 (function($, document, window, app) {
 
@@ -122,8 +122,8 @@ var APP = APP || {};
 	var components = [];
 
 	/**
-	 * Registers a game component. Duck typing is used to make sure that the component the user tries to register is a trogASR app compliant.
-	 * Every component has to have a init() and reset() function.
+	 * Registers a component. Duck typing is used to make sure that the component the user tries to register is a trogASR app compliant.
+	 * Every component has to have an init() and a reset() function.
 	 * @param cmp a plain object component to be registered
 	 * @returns {object} the registered and processed component
 	 */
@@ -145,14 +145,11 @@ var APP = APP || {};
 	 * Resets the application. Called whenever a need for re-doing localized content or statically sized content arises
 	 */
 	var reset = function() {
-
 		loader.show();
-
 		for(var i = 0, len = components.length; i < len; i++) {
 			var cmp = components[i];
 			cmp.reset();
 		}
-
 		loader.delayedHide(1000);
 	};
 
@@ -160,14 +157,12 @@ var APP = APP || {};
 	 * Initializes the application. Goes through the component register and calls an initialize() method on each of them
 	 */
 	var initialize = function() {
-
 		for(var i = 0, len = components.length; i < len; i++) {
 			var cmp = components[i];
 			cmp.initComponent();
 			// So the component might react to have been initialized
 			cmp.isInitialized = true;
 		}
-
 		loader.delayedHide(1000);
 	};
 

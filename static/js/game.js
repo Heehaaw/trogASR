@@ -3,7 +3,7 @@
  * Licensed under the Apache License, Version 2.0 (see the "LICENSE");
  */
 /**
- * Creates and registers a game component.
+ * Creates and registers the GAME component.
  *
  * Author: Janek Milota
  * Date: 02.04.2015

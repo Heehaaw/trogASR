@@ -25,7 +25,7 @@
 		var processFn = !/\W/.test(str)
 			// If the string is an id (no non-word characters), try to find a result in the cache or compute it and cache it
 			? templateCache[str] = templateCache[str] || process(document.getElementById(str).innerHTML, null, false)
-			// Otherwise process the raw html
+			// Otherwise create a processor function
 			: new Function("obj",
 			"var p=[],print=function(){p.push.apply(p,arguments);};"
 			+ "with(obj){p.push('"
@@ -39,8 +39,9 @@
 			+ "');}return p.join('');");
 
 		if(data) {
-			// The process function is prepared to process the raw html now
+			// Generate an id if not present
 			data.id = data.id || APP.getNextId();
+			// The process function is prepared to process the raw html now
 			var result = processFn(data);
 			return as$ ? $(result) : result;
 		}
@@ -53,7 +54,7 @@
 	// Assemble the component
 	var templates = {
 		/**
-		 * Ijnitializes the component
+		 * Initializes the component
 		 */
 		initComponent: function() {
 		},
