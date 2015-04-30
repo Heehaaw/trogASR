@@ -33,7 +33,7 @@ As the application itself is browser-based, this topic is somewhat relevant. Cur
 The functionality has been tested in Chrome, Opera Next and IE11. The first two browsers work just fine, IE, however, does not 
 (and I doubt it ever will).
 
-Also the fact the ASR library demands particular browser functionality cannot be omitted. More in the ASR library documentation.
+Also the fact the ASR library demands particular browser functionality cannot be omitted. More in the [ASR library documentation](http://www.cloudasr.com/documentation).
 
 > Just stick with any modern webkit-based browser and you'll be fine.
 
