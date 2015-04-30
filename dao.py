@@ -89,13 +89,14 @@ def query_db(query, args=(), single=False, connection=None):
 		return (rv[0] if rv else None) if single else rv
 
 
-def insert_word(word, meanings, source_lang, target_lang):
+def insert_word(word, meanings, source_lang, target_lang, connection=None):
 	"""
 	Inserts a word
 	:param word: word text
 	:param meanings: meanings text array
 	:param source_lang: source language
 	:param target_lang: target language
+	:param connection: connection to work with
 	"""
 
 	# Helper fetch function
@@ -108,7 +109,7 @@ def insert_word(word, meanings, source_lang, target_lang):
 			# Otherwise we insert a new entry
 			return conn.execute('INSERT INTO words(text, language) VALUES (?, ?)', [w, language]).lastrowid
 
-	with ConnectionManager() as conn:
+	with ConnectionManager(connection) as conn:
 		word_id = get_word_id(word, source_lang)
 		for meaning in meanings:
 			meaning_id = get_word_id(meaning, target_lang)

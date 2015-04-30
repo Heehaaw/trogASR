@@ -8,7 +8,7 @@
  * Author: Janek Milota
  * Date: 9.01.2015
  */
-(function($, app) {
+(function($, ns) {
 
 	// String constants
 	var menuId = '#menu';
@@ -133,14 +133,14 @@
 		var locale = APP.I18N.locale;
 
 		for(var loc in locale) {
-			// Every supported locale will have its own select sprite
+			// Every supported locale will have its own select-sprite
 			if(locale.hasOwnProperty(loc)) {
 				APP.TEMPLATES.process(localeSelectorItemTemplateId, {
 					data: loc,
 					selectorCls: loc
 				}, true)
 					.on('click', function() {
-						// Bind the click functionality to resetting the app with new locale
+						// Bind the click functionality to resetting the app with a new locale
 						APP.I18N.setCurrentLocale($(this).data('locale'));
 						APP.reset();
 					})
@@ -192,9 +192,9 @@
 	/**
 	 * The MENU component
 	 * @namespace
-	 * @alias APP>MENU
+	 * @alias APP.MENU
 	 */
-	app.MENU = app.registerComponent(menu);
+	ns.MENU = ns.registerComponent(menu);
 
 })(jQuery, APP);
 

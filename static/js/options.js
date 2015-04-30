@@ -296,6 +296,7 @@
 		$(optionsId).removeClass(showCls);
 	};
 
+	// Assemble the component
 	var options = {
 		initComponent: initComponent,
 		reset: reset,
