@@ -110,8 +110,8 @@ in the 'target' language
   >>> from db.import_dict import import_dict
   >>> import_dict('<your-dictionary-path>', '<your-language-abbreviation>', '[en|cs]')
   ```
-> Note that the `<your-language-abbreviation>`s have to match
-> Also note that the existing dictionaries can be extended easily using this method
+> Note that the `<your-language-abbreviation>`s have to match.
+> Also note that the existing dictionaries can be extended easily using this method.
 
 ### A really, REALLY light-weight player guide
 
