@@ -35,7 +35,7 @@ The functionality has been tested in Chrome, Opera Next and IE11. The first two 
 
 Also the fact the ASR library demands particular browser functionality cannot be omitted. More in the ASR library documentation.
 
-Just stick with any modern webkit-based browser and you'll be fine.
+> Just stick with any modern webkit-based browser and you'll be fine.
 
 ### Internationalization
 
@@ -110,8 +110,8 @@ in the 'target' language
   >>> from db.import_dict import import_dict
   >>> import_dict('<your-dictionary-path>', '<your-language-abbreviation>', '[en|cs]')
   ```
-- Note that the `<your-language-abbreviation>`s have to match
-- Also note that the existing dictionaries can be extended easily using this method
+> Note that the `<your-language-abbreviation>`s have to match
+> Also note that the existing dictionaries can be extended easily using this method
 
 ### A really, REALLY light-weight player guide
 
