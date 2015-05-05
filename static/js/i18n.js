@@ -202,7 +202,7 @@
 			'Prosím, využij přihlašovacího tlačítka. Nemůžeš soutěžit, dokud nikdo neví, kdo jsi!</div><br/><br/>' +
 			'<div>A samozřejmě, nezapomeň na Like! Enjoy :-)</div>',
 			en: '<div>Welcome to the one and only<br/>' +
-			'<b>Translating Online Game using Automatic Speech Recognition</b>!<br/>' +
+			'<b>Translating Online Game using Automatic Speech Recognition</b>!<br/><br/>' +
 			'What you can do here:<br/><br/>' +
 			'<b>Play</b><br/>' +
 			'<div>Challenge your translating skills in an ultimate voice-activated experience! Every round a word pops up. ' +
