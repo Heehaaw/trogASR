@@ -12,6 +12,7 @@
 
 	// String constants
 	var menuId = '#menu';
+	var userInfoId = '#userInfo';
 	var menuItemTemplateId = 'tpl_menuItem';
 	var localeSelectorItemTemplateId = 'tpl_localeSelectorItem';
 	var localeSelectorId = '#localeSelector';
@@ -70,14 +71,14 @@
 		$menu.append(createItem(APP.I18N.t.MENU_OPTIONS, function() {
 			APP.LEADERBOARDS.hide();
 			APP.OPTIONS.show();
-			show();
+			$(userInfoId).addClass(hideCls);
 		}));
 
 		// The leaderboards sprite
 		$menu.append(createItem(APP.I18N.t.MENU_LEADER_BOARDS, function() {
 			APP.OPTIONS.hide();
 			APP.LEADERBOARDS.show();
-			show();
+			$(userInfoId).addClass(hideCls);
 		}));
 
 		// We have to add the items first so they acquire context
@@ -122,6 +123,8 @@
 				$menuItems.removeClass(blurCls).removeClass(activeCls);
 			}
 		});
+
+		$(userInfoId).html(APP.I18N.t.MENU_USER_INFO);
 	};
 
 	/**
@@ -154,6 +157,7 @@
 	 */
 	var hide = function() {
 		$(menuId).addClass(hideCls);
+		$(userInfoId).addClass(hideCls);
 	};
 
 	/**
@@ -161,6 +165,7 @@
 	 */
 	var show = function() {
 		$(menuId).removeClass(hideCls);
+		$(userInfoId).removeClass(hideCls);
 	};
 
 	/**

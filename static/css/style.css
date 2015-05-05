@@ -264,6 +264,45 @@ footer {
     opacity: 1;
 }
 
+#userInfo {
+    position: absolute;
+    top: 17%;
+    right: 0.2%;
+    height: 70%;
+    width: 47%;
+    box-shadow: 0 0 0 0.07vw rgba(255, 255, 255, 0.5), 0.1vw 0.1vw 0.3vw 0.3vw rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
+    font-size: 180%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: right 0.5s ease-in-out;
+}
+
+#userInfo.hide {
+    right: -51%;
+}
+
+#userInfo > div {
+    margin: 3%;
+}
+
+#userInfo td {
+    vertical-align: top;
+}
+
+#userInfo td:nth-child(1) {
+    text-align: left;
+}
+
+#userInfo td:nth-child(2) {
+    text-align: justify;
+    padding-left: 3vh;
+}
+
+#userInfo div {
+    text-align: justify;
+}
+
 /* Options styles */
 
 #options {

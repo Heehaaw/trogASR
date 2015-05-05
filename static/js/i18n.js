@@ -171,6 +171,64 @@
 		GAME_INFO_END: {
 			cs: 'Konec hry! Získal/a jsi <b>{0}</b> bodů!',
 			en: 'Game over! You\'ve scored <b>{0}</b> points!'
+		},
+		MENU_USER_INFO: {
+			cs: '<div>Vítej v této jedinečné<br/>' +
+			'<b>Překladatelské hře, využívající automatického rozpoznávání řeči</b>!<br/><br/>' +
+			'Co zde můžeš podniknout:<br/><br/>' +
+			'<b>Hrát</b><br/>' +
+			'<div>Otestuj své překladatelské schopnosti v ultimátní, hlasem aktivované hře! Každé kolo vyskočí jedno slovo. ' +
+			'Tvým cílem je zmáčknout tlačítko "NAHRÁT", říci toto slovo ve zvoleném druhém jazyce, a zmáčknout tlačítko znovu. ' +
+			'Pokud je slovo vyřčeno správně, dostaneš bod. Pokud ne, musíš se popasovat s následky!</div><br/>' +
+			'<b>Nastavení</b>' +
+			'<table><tr>' +
+			'<td>Jazyk</td>' +
+			'<td>Nastav si jazyk, ze a do kterého budeš překládat.</td>' +
+			'</tr><tr>' +
+			'<td>Životy</td>' +
+			'<td>Vyber si, kolik budeš mít životů!</td>' +
+			'</tr><tr>' +
+			'<td>Nápovědy</td>' +
+			'<td>Protože rozpoznávač hlasu ještě není 100%, můžeš si při hře nechat poskytnout i několik nápověd.</td>' +
+			'</tr><tr>' +
+			'<td>Čas kola</td>' +
+			'<td>Když tento čas vyprší, ztratíš život (pokud máš životy zaplé).</td>' +
+			'</tr><tr>' +
+			'<td>Čas hry</td>' +
+			'<td>Když tento čas vyprší, hra skončí!<br/>' +
+			'</tr></table><div><br/>' +
+			'<b>Žebříčky</b><br/>' +
+			'<div>Jakmile dokončíš hru s nějakým nahraným počtem bodů, můžeš se umístit v žebříčcích! ' +
+			'Prosím, využij přihlašovacího tlačítka. Nemůžeš soutěžit, dokud nikdo neví, kdo jsi!</div><br/><br/>' +
+			'<div>A samozřejmě, nezapomeň na Like! Enjoy :-)</div>',
+			en: '<div>Welcome to the one and only<br/>' +
+			'<b>Translating Online Game using Automatic Speech Recognition</b>!<br/>' +
+			'What you can do here:<br/><br/>' +
+			'<b>Play</b><br/>' +
+			'<div>Challenge your translating skills in an ultimate voice-activated experience! Every round a word pops up. ' +
+			'Your goal is to press the "RECORD" button, say the word in the other language and press the button again. ' +
+			'If you are right, you score a point. If not, you face the consequences!</div><br/>' +
+			'<b>Options</b>' +
+			'<table><tr>' +
+			'<td>Language</td>' +
+			'<td>Set up the languages you will translate words from and to.</td>' +
+			'</tr><tr>' +
+			'<td>Lives</td>' +
+			'<td>Choose how many lives will you have!</td>' +
+			'</tr><tr>' +
+			'<td>Suggestions</td>' +
+			'<td>Because the recognition engine is not 100% yet, you are allowed to receive up to a number of suggestions during play.</td>' +
+			'</tr><tr>' +
+			'<td>Round time</td>' +
+			'<td>When this time runs out you loose a life (if you chose to enable them).</td>' +
+			'</tr><tr>' +
+			'<td>Game time</td>' +
+			'<td>When this time runs out the game ends!<br/>' +
+			'</tr></table><div><br/>' +
+			'<b>Leaderboards</b><br/>' +
+			'<div>By the time you will have finished the game with a number of scored points, you might be eligible to place in the leaderboards! ' +
+			'Please, use the "Log In" button for you can not compete while nobody knows who you are!</div><br/>' +
+			'<div>And of course, don\'t forget to like and share! Enjoy :-)</div>'
 		}
 	};
 
