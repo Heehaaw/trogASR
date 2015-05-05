@@ -33,7 +33,7 @@ As the application itself is browser-based, this topic is somewhat relevant. Cur
 The functionality has been tested in Chrome, Opera Next and IE11. The first two browsers work just fine, IE, however, does not 
 (and I doubt it ever will).
 
-Also the fact the ASR library demands particular browser functionality cannot be omitted. More in the ASR library documentation.
+Also the fact the ASR library demands particular browser functionality cannot be omitted. More in the [ASR library documentation](http://www.cloudasr.com/documentation).
 
 > Just stick with any modern webkit-based browser and you'll be fine.
 
@@ -97,8 +97,7 @@ This is done as follows:
   }
   ```
 
-- Provide your dictionary in `csv` format, where the 1st word is the word in your the 'source' language and the rest are its meanings
-in the 'target' language
+- Provide your dictionary in `csv` format, where the 1st word is the word in your 'source' language and the rest are its meanings in the 'target' language
 
   ```csv
   vůz;car;vehicle
@@ -117,11 +116,14 @@ in the 'target' language
 
 The running application is composed of 3 main modules - the game itself, options menu and leaderboards browsing.
 Upon loading the app in your browser, the main menu will pop up, giving the player a selection of said main modules.
+
 - The options menu lets the player configure the gameplay by modifying various settings, ranging from constraining the game and/or round time
 to setting the total life count.
+
 - The leaderboards browsing section displays player names and their respective achieved points. This display is based on the options 
 configuration (every combination of options will render its own leaderboards display). A player can place in the leaderboards only if they 
 opt to sign into the app via Facebook.
+
 - The game is the meat of the app. Every round will fetch a random word and let the user translate it into the chosen language.
 The 'record' button has to be pressed, the word spoken loudly and clearly (preferably in a quiet environment). After pressing the record button again,
 the engine will query the ASR library for possible transcripts and evaluate the results. Upon losing all the lives, timing out or simply manually exiting the game,
