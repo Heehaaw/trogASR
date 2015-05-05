@@ -11,11 +11,11 @@ class app_config:
 
 
 class db_config:
-	schema_location = 'D:/DEVELOPMENT/Python/TrogASR/db/schema.sql'
-	db_location = 'D:/DEVELOPMENT/Python/TrogASR/db/trogasr.db'
+	schema_location = 'db/schema.sql'
+	db_location = 'db/trogasr.db'
 
 
 class view_config:
-	host = 'localhost'
-	port = 5000
+	host = 'demo-trogasr.rhcloud.com'
+	port = 80
 	appId = '935335873184642'
