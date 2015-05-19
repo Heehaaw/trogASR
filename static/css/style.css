@@ -537,6 +537,10 @@ footer {
     height: 80%;
 }
 
+#game .recordBtn.recording.gameButton-wrapper {
+    background: rgba(200, 0, 0, 0.5)
+}
+
 #game .recordBtn.recording .gameButton {
     background: url('http://www.cloudasr.com/static/img/microphone_speech.png') no-repeat center top;
 }

@@ -126,20 +126,15 @@
 
 		// Create the record button and bind its click event
 		APP.SPRITE_FACTORY.createGameButtonSprite(recordBtnClass, APP.I18N.t.GAME_BUTTON_RECORD, true)
-			.on('click', function() {
+			.on('mousedown', function() {
 				if(!speechRecognition.isRecording) {
 					// We are not recording -> select the proper model and start to do so
 					speechRecognition.start(recognitionModelMap[targetLanguage]);
 				}
-				else {
+			})
+			.on('mouseup', function() {
+				if(speechRecognition.isRecording) {
 					speechRecognition.stop();
-					//rec = false;
-					//if(lastRoundNr !== roundNr && !err) {
-					//	$gear.fadeIn(100);
-					//	lastRoundNr = roundNr;
-					//	processResult(['xxx aaaaa bb', 'yyyy yyy zzz', 'yyyy', 'fffffff ff', 'aa aaaaaa']);
-					//}
-					//err = false;
 				}
 			})
 			.appendTo($game);
@@ -710,4 +705,5 @@
 	 */
 	ns.GAME = ns.registerComponent(game);
 
-})(jQuery, APP);
+})
+(jQuery, APP);
