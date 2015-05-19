@@ -178,7 +178,7 @@
 			'Co zde můžeš podniknout:<br/><br/>' +
 			'<b>Hrát</b><br/>' +
 			'<div>Otestuj své překladatelské schopnosti v ultimátní, hlasem aktivované hře! Každé kolo vyskočí jedno slovo. ' +
-			'Tvým cílem je zmáčknout tlačítko "NAHRÁT", říci toto slovo ve zvoleném druhém jazyce, a zmáčknout tlačítko znovu. ' +
+			'Tvým cílem je zmáčknout tlačítko "NAHRÁT", říci toto slovo ve zvoleném druhém jazyce, a tlačítko pustit znovu. ' +
 			'Pokud je slovo vyřčeno správně, dostaneš bod. Pokud ne, musíš se popasovat s následky!</div><br/>' +
 			'<b>Nastavení</b>' +
 			'<table><tr>' +
@@ -206,7 +206,7 @@
 			'What you can do here:<br/><br/>' +
 			'<b>Play</b><br/>' +
 			'<div>Challenge your translating skills in an ultimate voice-activated experience! Every round a word pops up. ' +
-			'Your goal is to press the "RECORD" button, say the word in the other language and press the button again. ' +
+			'Your goal is to press the "RECORD" button, say the word in the other language and release the button. ' +
 			'If you are right, you score a point. If not, you face the consequences!</div><br/>' +
 			'<b>Options</b>' +
 			'<table><tr>' +
